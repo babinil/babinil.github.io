@@ -1,45 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
+<meta charset="UTF-8">
+<title>Snow UI</title>
+
 <style>
 body {
   margin: 0;
-  background: black;
+  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+  font-family: sans-serif;
   overflow: hidden;
+  color: white;
 }
 
+/* 눈 */
 .snow {
   position: fixed;
   top: -10px;
   color: white;
-  font-size: 10px;
-  user-select: none;
   pointer-events: none;
   animation: fall linear infinite;
 }
 
 @keyframes fall {
   to {
-    transform: translateY(100vh);
+    transform: translate(100px, 100vh); /* 👉 사선 이동 */
   }
+}
+
+/* 중앙 텍스트 */
+.center {
+  position: absolute;
+  top: 40%;
+  width: 100%;
+  text-align: center;
+}
+
+.center h1 {
+  font-size: 48px;
+  margin: 0;
+}
+
+.center p {
+  opacity: 0.8;
+}
+
+/* 메뉴 박스 */
+.menu {
+  position: absolute;
+  bottom: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* 버튼 스타일 */
+.btn {
+  padding: 15px 25px;
+  border-radius: 30px; /* 👉 동글동글 */
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: rgba(255,255,255,0.3);
 }
 </style>
 </head>
+
 <body>
 
+<div class="center">
+  <h1>WELCOME</h1>
+  <p>눈 내리는 감성 페이지</p>
+</div>
+
+<div class="menu">
+  <div class="btn">MENU 1</div>
+  <div class="btn">MENU 2</div>
+  <div class="btn">MENU 3</div>
+</div>
+
 <script>
-for (let i = 0; i < 100; i++) {
-  let snow = document.createElement("div");
+function createSnow() {
+  const snow = document.createElement("div");
   snow.className = "snow";
   snow.innerHTML = "❄";
-  snow.style.left = Math.random() * 100 + "vw";
-  snow.style.animationDuration = (Math.random() * 3 + 2) + "s";
-  snow.style.fontSize = (Math.random() * 10 + 10) + "px";
-  document.body.appendChild(snow);
-}
-</script>
 
-  <h1 style="color:white;"> TEST </h1>
+  snow.style.left = Math.random() * 100 + "vw";
+  snow.style.fontSize = (Math.random() * 10 + 10) + "px";
+  snow.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
+  document.body.appendChild(snow);
+
+  setTimeout(() => snow.remove(), 5000);
+}
+
+setInterval(createSnow, 100);
+</script>
 
 </body>
 </html>
