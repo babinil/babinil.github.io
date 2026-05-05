@@ -50,7 +50,27 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
+        .card-img {
+            width: 100%;
+            height: 100%
+            object-fit: cover;
+            border-radius: 20px;
         }
+
+        .leftcard {
+            position: relative;
+            padding: 0;
+        }
+
+        .leftcard h1 {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            margin: 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        
     </style>
 </head>
 <body>
@@ -59,11 +79,9 @@
             <div class="slider-container">
     
                 <!-- 카드 뭉치 -->
-                <div class="slider-wrapper" id="slider">
                     <div class="leftcard">
-                        <h1>test</h1>
+                        <img src="image/J26.jpeg" alt="J" class="card-img">
                     </div>
-                </div>
         </div>
     </div>
 
