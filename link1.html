@@ -15,7 +15,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: radial-gradient(circle at center, #F0F4F8 0%, #D9E2EC 100%);
+            background: linear-gradient(135deg, #F0F4F8 0%, #D9E2EC 100%);
             font-family: 'Pretendard', sans-serif;
             overflow: hidden;
             font-family: 'Nanum Myeongjo', serif;
@@ -35,6 +35,21 @@
         }
 
         /* 3. 개별 카드 스타일 (커다란 네모) */
+
+        .frontcard{
+            min-width: 100%;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 150, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            font-size: 24px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
         .leftcard {
             min-width: 100%;
             min-height: 100%;
@@ -74,16 +89,20 @@
     </style>
 </head>
 <body>
-    <h1> Judas & Iris</h1>
-    <p>"얼어붙은 바다에 가라앉은 유일한 온기"</p>
 
     <div style="position: relative;">
             <div class="slider-container">
     
                 <!-- 카드 뭉치 -->
-                    <div class="leftcard">
-                        <img src="image/J26.jpeg" alt="J" class="card-img">
-                    </div>
+                <div class="frontcard">
+                    <h1> Judas & Iris</h1>
+                    <p>"얼어붙은 바다에 가라앉은 유일한 온기"</p>
+                </div>
+                    
+                <div class="leftcard">
+                    <img src="image/J26.jpeg" alt="J" class="card-img">
+                </div>
+                
         </div>
     </div>
 
