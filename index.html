@@ -134,7 +134,7 @@
 
         /*눈이 옴*/
         function createSnow() {
-            const snow = document.creatElement("div");
+            const snow = document.createElement("div");
             snow.className = "snow";
             snow.innerHTML = "❄";
 
@@ -147,7 +147,7 @@
             setTimeout(() => snow.remove(),5000);
         }
 
-        setinterval(createSnow, 100);
+        setInterval(createSnow, 100);
     </script>
 
 </body>
