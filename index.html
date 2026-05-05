@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <!-- 구글 폰트에서 '나눔명조' 불러오기 -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Blue Gradient Slider</title>
     <style>
+        /* 폰트 적용: 나눔명조를 1순위로, 없으면 기본 명조체 사용 */
         /* 1. 배경 설정: 파란색 그라데이션 */
         body {
             margin: 0;
@@ -15,6 +18,13 @@
             background: linear-gradient(135deg, #1e3c72, #2a5298, #6dd5ed);
             font-family: 'Pretendard', sans-serif;
             overflow: hidden;
+            font-family: 'Nanum Myeongjo', serif;
+        }
+
+        h1 {
+            font-weight: 700; /* 제목은 두껍게 */
+            letter-spacing: -1px; /* 자간을 살짝 좁히면 더 예뻐요 */
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3); /* 은은한 빛 효과 */
         }
 
         /* 2. 슬라이더 외곽 컨테이너 */
