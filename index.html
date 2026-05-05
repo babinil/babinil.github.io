@@ -1,114 +1,122 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Snow UI</title>
+    <meta charset="UTF-8">
+    <title>Blue Gradient Slider</title>
+    <style>
+        /* 1. 배경 설정: 파란색 그라데이션 */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e3c72, #2a5298, #6dd5ed);
+            font-family: 'Pretendard', sans-serif;
+            overflow: hidden;
+        }
 
-<style>
-body {
-  margin: 0;
-  /* 1. 높이를 화면 전체(100vh)로 고정 */
-  height: 100vh; 
-  /* 2. 배경이 반복되지 않도록 설정 */
-  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-  background-attachment: fixed;
-  
-  overflow: hidden;
-  /* 3. 글자색을 흰색으로 변경 (어두운 배경이므로) */
-  color: white; 
-}
+        /* 2. 슬라이더 외곽 컨테이너 */
+        .slider-container {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            height: 400px;
+            overflow: hidden; /* 영역 밖 카드는 숨김 */
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
 
-/* 눈 */
-.snow {
-  position: fixed;
-  top: -10px;
-  color: white;
-  pointer-events: none;
-  animation: fall linear infinite;
-}
+        /* 3. 카드들이 나열되는 긴 박스 */
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out; /* 스르륵 넘어가는 효과 */
+            height: 100%;
+        }
 
-@keyframes fall {
-  0% {
-    transform: translateY(0) translateX(0);
-  }
-  100% {
-    transform: translateY(100vh) translateX(100px);
-  }
-}
+        /* 4. 개별 카드 스타일 (커다란 네모) */
+        .card {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15); /* 유리 질감 */
+            backdrop-filter: blur(15px);
+            color: white;
+            font-size: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
-/* 중앙 텍스트 */
-.center {
-  position: absolute;
-  top: 40%;
-  width: 100%;
-  text-align: center;
-}
+        /* 5. 화살표 버튼 */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 30px;
+            padding: 20px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: 0.3s;
+            z-index: 10;
+        }
 
-.center h1 {
-  font-size: 48px;
-  margin: 0;
-}
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
 
-.center p {
-  opacity: 0.8;
-}
-
-/* 메뉴 박스 */
-.menu {
-  position: absolute;
-  bottom: 50px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-/* 버튼 스타일 */
-.btn {
-  padding: 15px 25px;
-  border-radius: 30px; /* 👉 동글동글 */
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  background: rgba(255,255,255,0.3);
-}
-</style>
+        .prev { left: 20px; }
+        .next { right: 20px; }
+    </style>
 </head>
-
 <body>
 
-<div class="center">
-  <h1>WELCOME</h1>
-  <p>눈 내리는 감성 페이지</p>
-</div>
+    <div class="slider-container">
+        <!-- 화살표 버튼 -->
+        <button class="nav-btn prev" onclick="moveSlide(-1)">❮</button>
+        <button class="nav-btn next" onclick="moveSlide(1)">❯</button>
 
-<div class="menu">
-  <div class="btn">MENU 1</div>
-  <div class="btn">MENU 2</div>
-  <div class="btn">MENU 3</div>
-</div>
+        <!-- 카드 뭉치 -->
+        <div class="slider-wrapper" id="slider">
+            <div class="card">
+                <h1>Slide 1</h1>
+                <p>첫 번째 안내 페이지입니다.</p>
+            </div>
+            <div class="card" style="background: rgba(255,255,255,0.1);">
+                <h1>Slide 2</h1>
+                <p>두 번째 안내 페이지입니다.</p>
+            </div>
+            <div class="card">
+                <h1>Slide 3</h1>
+                <p>세 번째 안내 페이지입니다.</p>
+            </div>
+        </div>
+    </div>
 
-<script>
-function createSnow() {
-  const snow = document.createElement("div");
-  snow.className = "snow";
-  snow.innerHTML = "❄";
+    <script>
+        let currentIndex = 0;
+        const slider = document.getElementById('slider');
+        const totalSlides = document.querySelectorAll('.card').length;
 
-  snow.style.left = Math.random() * 100 + "vw";
-  snow.style.fontSize = (Math.random() * 10 + 10) + "px";
-  snow.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        function moveSlide(direction) {
+            currentIndex += direction;
 
-  document.body.appendChild(snow);
+            // 마지막 슬라이드에서 다음을 누르면 처음으로, 그 반대도 가능하게 설정
+            if (currentIndex >= totalSlides) {
+                currentIndex = 0;
+            } else if (currentIndex < 0) {
+                currentIndex = totalSlides - 1;
+            }
 
-  setTimeout(() => snow.remove(), 5000);
-}
-
-setInterval(createSnow, 100);
-</script>
+            // 가로로 이동시키기 (100%씩 이동)
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+    </script>
 
 </body>
 </html>
