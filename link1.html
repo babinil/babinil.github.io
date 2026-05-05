@@ -79,6 +79,49 @@
 
             margin: 5px 0;
         }
+
+        .chat-container{
+            display: flex;
+            flex-directio: column;
+            gap: 15px;
+            width: 250px;
+            z-index: 10;
+        }
+
+        .bubble{
+            position: relative;
+            padding: 10px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            Line-height: 1.4;
+            max-width:80%;
+            word-break: keep-all;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .legt-bubble{
+            align-self: flex-start;
+            background: blue:
+            color: #333;
+            border-bottom-left-radius: 2px;
+        }
+
+        .right-bubble{
+            align-self: flex-end;
+            background: #FEE500;
+            color: #333;
+            border-bottom-right-radius:2px;
+        }
+
+        @keyframes fadeInUp{
+            from {opacity: 0; transform: translateY(10px); }
+            to {opacity: 1; transform: translateY(0); }
+        }
+
+        .bubble {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
         
     </style>
 </head>
@@ -100,6 +143,12 @@
             <!-- 왼쪽 -->
             <div class="side-card left">
                 <img src="image/J26.jpeg" alt="J" class="card-img">
+            </div>
+
+            <!-- 말풍선 -->
+            <div class="chat-container">
+                <div class="bubble left-bubble">"사랑합니다. 그러니까 녹으십시오."</div>
+                <div class="bubble right-bubble">"사라지지 않을게요. 약속."</div>
             </div>
             <!-- 오른쪽 -->
             <div class="side-card right">
