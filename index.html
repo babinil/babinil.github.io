@@ -7,9 +7,15 @@
 <style>
 body {
   margin: 0;
+  /* 1. 높이를 화면 전체(100vh)로 고정 */
+  height: 100vh; 
+  /* 2. 배경이 반복되지 않도록 설정 */
   background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+  background-attachment: fixed;
+  
   overflow: hidden;
-  color: black;
+  /* 3. 글자색을 흰색으로 변경 (어두운 배경이므로) */
+  color: white; 
 }
 
 /* 눈 */
@@ -22,8 +28,11 @@ body {
 }
 
 @keyframes fall {
-  to {
-    transform: translate(100px, 100vh); /* 👉 사선 이동 */
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  100% {
+    transform: translateY(100vh) translateX(100px);
   }
 }
 
