@@ -1,24 +1,43 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>상단 메뉴 바</title>
-    <link rel="stylesheet" href="style.css">
+<style>
+body {
+  margin: 0;
+  background: black;
+  overflow: hidden;
+}
+
+.snow {
+  position: fixed;
+  top: -10px;
+  color: white;
+  font-size: 10px;
+  user-select: none;
+  pointer-events: none;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
+  }
+}
+</style>
 </head>
 <body>
-    <header class="navbar">
-        <div class="logo">LOGO</div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <h1>안녕, 내 홈페이지!</h1>
-    <p>여기는 내가 만든 첫 웹사이트야.</p>
-  <img src="images/DARKGREENTLQ.PNG" alt="test" width="500">
+
+<script>
+for (let i = 0; i < 100; i++) {
+  let snow = document.createElement("div");
+  snow.className = "snow";
+  snow.innerHTML = "❄";
+  snow.style.left = Math.random() * 100 + "vw";
+  snow.style.animationDuration = (Math.random() * 3 + 2) + "s";
+  snow.style.fontSize = (Math.random() * 10 + 10) + "px";
+  document.body.appendChild(snow);
+}
+</script>
+
 </body>
 </html>
