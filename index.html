@@ -130,30 +130,42 @@
     <a href="link1.html" id="main-link">
         <div class="circle-content">
             <h1 id="title">J x 리에</h1>
-            <p id="desc">Merry Christmas</p>
+            <p id="startDate">"2025-02-17"</p>
             <span style="font-size: 11px; margin-top: 20px; opacity: 0.4;">CLICK TO ENTER</span>
         </div>
     </a>
 
     <script>
+
+        // 날짜 계산 전달
+        function calculateDays(dateString) {
+            if (!dateString) return ""; // 날짜 정보가 없으면 빈 칸 반환
+            const start = new Date(dateString);
+            const today = new Date();
+            const diff = today - start;
+            const dayCount = Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
+
+            return `❤️ ${dayCount}`;
+        }
+        
         // 페이지 데이터 설정 (이미지 주소, 제목, 문구, 링크)
         const pages = [
             {
                 bg: "radial-gradient(circle at center, #1a2a6c 0%, #000000 100%)",
                 title: "J x 리에",
-                desc: 'Merry Christmas',
+                startDate: "2025-02-17",
                 link: "link1.html"
             },
             {
                 bg: "radial-gradient(circle at center, #4b1212 0%, #000000 100%)",
                 title: "론 x 벨라",
-                desc: 'Eternal Sunset',
+                startDate: "2025-07-16",
                 link: "link2.html"
             },
             {
                 bg: "radial-gradient(circle at center, #2c3e50 0%, #000000 100%)",
                 title: "C x 루나",
-                desc: '薄明夜話',
+                startDate: "2025-08-24",
                 link: "link3.html"
             }
         ];
@@ -172,6 +184,14 @@
             document.getElementById('title').innerText = data.title;
             document.getElementById('desc').innerText = data.desc;
             document.getElementById('main-link').href = data.link;
+
+            // 날짜 정보(startDate)가 있으면 계산해서 넣고, 없으면 일반 문구(desc)를 넣음
+            if (data.startDate) {
+                document.getElementById('desc').innerText = calculateDays(data.startDate);
+                } else {
+                document.getElementById('desc').innerText = data.desc;
+            }
+            
         }
 
         // 눈 생성 로직 (동일)
