@@ -182,7 +182,7 @@
             // 데이터 교체
             document.getElementById('bg-body').style.background = data.bg;
             document.getElementById('title').innerText = data.title;
-            document.getElementById('desc').innerText = data.desc;
+            document.getElementById('startDate').innerText = calculateDays(data.startDate);
             document.getElementById('main-link').href = data.link;
 
             // 날짜 정보(startDate)가 있으면 계산해서 넣고, 없으면 일반 문구(desc)를 넣음
