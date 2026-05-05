@@ -1,7 +1,56 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <!-- 구글 폰트에서 '나눔명조' 불러오기 -->
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>J x 리에</title>
+    <style>
+        /* 폰트 적용: 나눔명조를 1순위로, 없으면 기본 명조체 사용 */
+        /* 1. 배경 설정: 파란색 그라데이션 */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* 기존 그라데이션+비네팅 효과*/
+            background: radial-gradient(circle at center, #2c5364 0%, #0f2027 100%);
+            font-family: 'Pretendard', sans-serif;
+            overflow: hidden;
+            font-family: 'Nanum Myeongjo', serif;
+        }
+
+        /* 4. 개별 카드 스타일 (커다란 네모) */
+        .leftcard {
+            min-width: 100%;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            align-items: left;
+            background: rgba(255, 255, 255, 0.15); /* 유리 질감 */
+            backdrop-filter: blur(15px);
+            color: blue;
+            font-size: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        }
+    </style>
 </head>
 <body>
-  <h1>졸려</h1>
+
+    <div style="position: relative;">
+    
+                <!-- 카드 뭉치 -->
+                <div class="slider-wrapper" id="slider">
+                    <div class="card">
+                        <h1>test</h1>
+                    </div>
+                </div>
+        </div>
+
 </body>
+</html>
