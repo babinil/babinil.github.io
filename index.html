@@ -72,6 +72,21 @@
 
         .prev { left: 20px; }
         .next { right: 20px; }
+
+        /* 눈 */
+        .snow {
+          position: fixed;
+          top: -10px;
+          color: white;
+          pointer-events: none;
+          animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translate(100px, 100vh); /* 사선 이동 */
+            }
+        }
     </style>
 </head>
 <body>
@@ -116,6 +131,23 @@
             // 가로로 이동시키기 (100%씩 이동)
             slider.style.transform = `translateX(-${currentIndex * 100}%)`;
         }
+
+        /*눈이 옴*/
+        function createSnow() {
+            const snow = document.creatElement("div");
+            snow.className = "snow";
+            snow.innerHTML = "❄";
+
+            snow.style.left = Math.random() * 100 + "vw";
+            snow.style.fontSize = (Math.random() * 10 + 10)+"px";
+            snow.style.animationDuration = (Math.random()*3+2)+"s";
+
+            document.body.appendChild(snow);
+
+            setTimeout(() => snow.remove(),5000);
+        }
+
+        setinterval(createSnow, 100);
     </script>
 
 </body>
