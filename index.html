@@ -136,17 +136,6 @@
     </a>
 
     <script>
-
-        // 날짜 계산 전달
-        function calculateDays(dateString) {
-            if (!dateString) return ""; // 날짜 정보가 없으면 빈 칸 반환
-            const start = new Date(dateString);
-            const today = new Date();
-            const diff = today - start;
-            const dayCount = Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
-
-            return `❤️ ${dayCount}`;
-        }
         
         // 페이지 데이터 설정 (이미지 주소, 제목, 문구, 링크)
         const pages = [
@@ -171,6 +160,17 @@
         ];
 
         let currentPage = 0;
+
+        // 날짜 계산 전달
+        function calculateDays(dateString) {
+            if (!dateString) return ""; // 날짜 정보가 없으면 빈 칸 반환
+            const start = new Date(dateString);
+            const today = new Date();
+            const diff = today - start;
+            const dayCount = Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
+
+            return `❤️ ${dayCount}`;
+        }
 
         function changePage(direction) {
             currentPage += direction;
