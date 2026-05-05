@@ -22,6 +22,24 @@
             font-family: 'Nanum Myeongjo', serif;
         }
 
+        /* 2. 슬라이더 외곽 컨테이너 */
+        .slider-container {
+            position: relative;
+            width: 400px;
+            max-width: 800px;
+            height: 600px;
+            overflow: hidden; /* 영역 밖 카드는 숨김 */
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        /* 3. 카드들이 나열되는 긴 박스 */
+        .slider-wrapper {
+            display: flex;
+            height: 100%;
+        }
+
         /* 4. 개별 카드 스타일 (커다란 네모) */
         .leftcard {
             min-width: 100%;
@@ -43,6 +61,7 @@
 <body>
 
     <div style="position: relative;">
+            <div class="slider-container">
     
                 <!-- 카드 뭉치 -->
                 <div class="slider-wrapper" id="slider">
@@ -51,6 +70,7 @@
                     </div>
                 </div>
         </div>
+    </div>
 
 </body>
 </html>
