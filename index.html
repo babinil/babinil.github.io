@@ -20,9 +20,9 @@
         /* 2. 슬라이더 외곽 컨테이너 */
         .slider-container {
             position: relative;
-            width: 80%
+            width: 400px;
             max-width: 800px;
-            height: 400px;
+            height: 600px;
             overflow: hidden; /* 영역 밖 카드는 숨김 */
             border-radius: 20px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
@@ -55,7 +55,7 @@
         .nav-btn {
             position: absolute;
             top: 50%;
-            transform: translateY(-50%);
+            transform: translateY(-80%);
             background: none;
             border: none;
             color: white;
@@ -71,8 +71,8 @@
             background: rgba(255, 255, 255, 0.4);
         }
 
-        .prev { left: 20px; }
-        .next { right: 20px; }
+        .prev { left: -70px; }
+        .next { right: -70px; }
 
         /* 눈 */
         .snow {
@@ -92,27 +92,31 @@
     </style>
 </head>
 <body>
-        
-    <div class="slider-container">
-            <!-- 화살표 버튼 -->
+
+    <div style="position: relative;">
+        <!-- 화살표 버튼 -->
         <button class="nav-btn prev" onclick="moveSlide(-1)">❮</button>
-        <button class="nav-btn next" onclick="moveSlide(1)">❯</button>
+        
+        <div class="slider-container">
     
-            <!-- 카드 뭉치 -->
-            <div class="slider-wrapper" id="slider">
-                <div class="card">
-                    <h1>J 💔 리에</h1>
-                    <p>"너는 나의 부서진 세계에 남은 유일한 약속이었다."</p>
+                <!-- 카드 뭉치 -->
+                <div class="slider-wrapper" id="slider">
+                    <div class="card">
+                        <h1>J 💔 리에</h1>
+                        <p>설명</p>
+                    </div>
+                    <div class="card" style="background: rgba(255,255,255,0.1);">
+                        <h1>Slide 2</h1>
+                        <p>두 번째 안내 페이지입니다.</p>
+                    </div>
+                    <div class="card">
+                        <h1>Slide 3</h1>
+                        <p>세 번째 안내 페이지입니다.</p>
+                    </div>
                 </div>
-                <div class="card" style="background: rgba(255,255,255,0.1);">
-                    <h1>Slide 2</h1>
-                    <p>두 번째 안내 페이지입니다.</p>
-                </div>
-                <div class="card">
-                    <h1>Slide 3</h1>
-                    <p>세 번째 안내 페이지입니다.</p>
-                </div>
-            </div>
+        </div>
+        <!-- 화살표 버튼 -->
+        <button class="nav-btn next" onclick="moveSlide(1)">❯</button>
     </div>
 
     <script>
