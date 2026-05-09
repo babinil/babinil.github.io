@@ -82,6 +82,43 @@
             margin: 5px 0;
         }
 
+        .typing {
+            display: flex;
+            gap: 4px;
+            padding: 10px;
+            opacity: 0;
+        }
+
+        .typing span{
+            width: 6px;
+            height: 6px;
+            background-color: #888;
+            border-radius: 50%;
+            animation: bounce 1s infinite;
+        }
+
+        .typing span:nth-child(2) {animation-delay: 0.2s; }
+        .typing span:nth-child(3) {animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 100% {transform: translateY(0);}
+            50% { transform: translateY(-5px);}
+        }
+
+        .typing-fade{
+            animation: typingFade 1.5s ease-in-out forwards;
+        }
+
+        @keyframes typingFade {
+            0% {opacity: 0;}
+            20% {opacity: 1;}
+            80% {opacity: 1;}
+            100% {opacity: 0; display: none;}
+        }
+
+        .left-typing {align-self: flex-starts;}
+        .right-typing {align-self: flex-end;}
+
         .chat-container{
             display: flex;
             flex-direction: column;
@@ -128,12 +165,12 @@
             to {opacity: 1; transform: translateY(0); }
         }
 
-        .bubble {
-            animation: fadeInUp 0.8s ease forwards;
-        }
+        .bubble {opacity: 0;}
+        .bubble:nth-child(2) {animation: fadeInUp 0.8s ease 1.5s forwards;}
+        .bubble:nth-child(4) {animation: fadeInUp 0.8s ease 3.5s forwards;}
 
-        .bubble:nth-child(1) {animation-delay: 0.5s;}
-        .bubble:nth-child(2) {animation-delay: 1.5s;}
+        .typing {animation: typingFade 1.5s ease-in-out forwards;}
+        .right-typing (animation-delay: 2s;}
         
     </style>
 </head>
@@ -159,7 +196,16 @@
 
             <!-- 말풍선 -->
             <div class="chat-container">
+                <!-- 왼쪽 입력 중 -->
+                <div class="typing left-typing">
+                    <span></span><span></span><span></span>
+                </div>
                 <div class="bubble left-bubble">"사랑합니다. 그러니까 녹으십시오."</div>
+
+                <!-- 오른쪽 입력 중-->
+                <div class="typing right-typing">
+                    <span></span><span></span><span></span>
+                </div>
                 <div class="bubble right-bubble">"사라지지 않을게요. 약속."</div>
             </div>
             <!-- 오른쪽 -->
