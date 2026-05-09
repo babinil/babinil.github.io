@@ -116,9 +116,6 @@
             100% {opacity: 0; display: none;}
         }
 
-        .left-typing {align-self: flex-start;}
-        .right-typing {align-self: flex-end;}
-
         .chat-container{
             display: flex;
             flex-direction: column;
@@ -139,14 +136,31 @@
             animation: fadeInUp 0.8s ease forwards;
         }
 
+        .left-typing {
+            animation: typingFade 1.5s ease-in-out forwards;
+            animation-delay: 0s;
+        }
+
         .left-bubble{
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 1.5s;
             align-self: flex-start;
             background: blue:
             color: #333;
             border-bottom-left-radius: 2px;
         }
 
+        .right-typing {
+            opacity: 0;
+            animation: typingFade 1.5s ease-in-out forwards;
+            animation-delay: 2.3s;
+        }
+
         .right-bubble{
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: 3.8s;
             align-self: flex-end;
             background: #FEE500;
             color: #333;
