@@ -35,7 +35,7 @@
             align-items: center;
             z-index: 10;
 
-            /* 인트로 애니메이션: 살짝 커지며 투명도 페이드인 */
+            /* [단계 1] 유리창 인트로 애니메이션 (0초~1초) */
             opacity: 0;
             transform: scale(0.95);
             animation: boardFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -58,7 +58,7 @@
             scrollbar-width: none;
         }
 
-        /* --- ✍️ 2 & 3. 상단 텍스트 타이핑 애니메이션 복구 --- */
+        /* --- ✍️ 2 & 3. 상단 텍스트 타이핑 애니메이션 (문법 오류 수정) --- */
         .top-text {
             text-align: center;
             color: #1a1a1a;
@@ -69,13 +69,14 @@
         }
 
         .top-text h1 { 
-            font-size: 30px; /* 줄이신 폰트 크기 유지 */
+            font-size: 30px; 
             margin: 0 0 12px 0;
             white-space: nowrap;
-            overflow: hidden; /* 👈 타이핑을 위해 필수 */
-            width: 0;         /* 👈 시작할 때 글자를 숨김 */
-            animation: typing h1-typing 1s steps(12) forwards;
-            animation-delay: 0.5s; /* 유리창이 뜨고 난 뒤 시작 */
+            overflow: hidden; 
+            width: 0;         
+            /* [단계 2] 유리창이 다 뜨는 1초 시점에 타이핑 시작 (1초~2초) */
+            animation: textTyping 1s steps(12) forwards;
+            animation-delay: 1s; 
         }
 
         .top-text p { 
@@ -84,14 +85,15 @@
             color: #444;
             margin: 0;
             white-space: nowrap;
-            overflow: hidden; /* 👈 타이핑을 위해 필수 */
-            width: 0;         /* 👈 시작할 때 글자를 숨김 */
-            animation: typing p-typing 1.2s steps(22) forwards;
-            animation-delay: 1.5s; /* h1 타이핑이 끝난 뒤 시작 */
+            overflow: hidden; 
+            width: 0;         
+            /* [단계 3] h1 타이핑이 끝나는 2초 시점에 타이핑 시작 (2초~3.2초) */
+            animation: textTyping 1.2s steps(22) forwards;
+            animation-delay: 2s; 
         }
 
-        /* 타이핑 핵심 애니메이션 효과 */
-        @keyframes typing {
+        /* 🔄 타이핑 통합 키프레임 이름 적용 */
+        @keyframes textTyping {
             from { width: 0%; }
             to { width: 100%; }
         }
@@ -103,9 +105,10 @@
             width: 0px;
             height: 1px;
             background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.2), transparent);
-            margin: 25px 0 40px 0; /* 위아래 간격 확보 */
-            animation: expandWidth 1s ease forwards;
-            animation-delay: 2.8s; /* 글자 타이핑이 완벽히 끝난 후 재생 */
+            margin: 25px 0 40px 0; 
+            /* [단계 4] p 태그 타이핑이 끝나는 3.2초 시점에 가로선이 쫙 펼쳐짐 */
+            animation: expandWidth 0.8s ease forwards;
+            animation-delay: 3.2s; 
         }
 
         @keyframes expandWidth {
@@ -118,7 +121,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            gap: 60px; /* 두 프로필 사이의 간격 */
+            gap: 60px; 
             width: 100%;
         }
 
@@ -127,7 +130,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px; /* 카드와 아래 텍스트창 사이 여백 */
+            gap: 20px; 
             width: 220px;
         }
 
@@ -146,14 +149,14 @@
             animation: fadeInUpCard 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* [카드] 왼쪽 먼저 등장 */
+        /* [단계 5] 가로선까지 다 생기고 난 후, 왼쪽 카드 등장 */
         .side-card.left {
-            animation-delay: 4.5s;
+            animation-delay: 4.0s;
         }
 
-        /* [카드] 오른쪽 순차 등장 */
+        /* 오른쪽 카드는 순차적으로 이어서 등장 */
         .side-card.right {
-            animation-delay: 5.3s;
+            animation-delay: 4.6s;
         }
 
         .card-img {
@@ -167,11 +170,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- 📝 6 & 7. 하단 모서리가 둥근 프로필 텍스트창 --- */
+        /* --- 📝 6 & 7. 프로필 텍스트창 애니메이션 --- */
         .profile-desc-box {
             width: 100%;
-            background: rgba(255, 255, 255, 0.75); /* 카드 아래 선명도를 위해 약간 더 불투명하게 */
-            border-radius: 15px; /* 모서리가 둥근 네모 */
+            background: rgba(255, 255, 255, 0.75); 
+            border-radius: 15px; 
             padding: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             border: 1px solid rgba(255,255,255,0.5);
@@ -186,14 +189,13 @@
             animation: fadeInBox 0.6s ease forwards;
         }
 
-        /* [텍스트창] 왼쪽 먼저 등장 */
+        /* 카드들이 자리를 잡은 후 설명창이 부드럽게 나타남 */
         .profile-desc-box.left {
-            animation-delay: 6.2s;
+            animation-delay: 5.2s;
         }
 
-        /* [텍스트창] 오른쪽 최종 등장 */
         .profile-desc-box.right {
-            animation-delay: 7.0s;
+            animation-delay: 5.8s;
         }
 
         @keyframes fadeInBox {
@@ -201,7 +203,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- ❄️ 눈송이 전용 스타일 (그대로 유지) --- */
+        /* --- ❄️ 눈송이 전용 스타일 --- */
         #snow-background {
             position: fixed;
             top: 0; left: 0;
