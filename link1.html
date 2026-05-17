@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>J x 리에</title>
+    <title>빙점(氷點)</title>
     <style>
         /* 1. 기본 배경 설정 */
         body {
@@ -26,6 +26,9 @@
             border-radius: 30px;
             padding: 50px 60px;
             width: 750px;
+            max-height: 70vh;
+            box-sizing: border-box;
+            overflow-y: auto;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
             display: flex;
             flex-direction: column;
@@ -46,6 +49,15 @@
             }
         }
 
+        .profile-board::-webkit-scrollbar {
+            display: none;
+        }
+
+        .profile-board{
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
         /* --- ✍️ 2 & 3. 상단 텍스트 타이핑 애니메이션 --- */
         .top-text {
             text-align: center;
@@ -57,7 +69,7 @@
         }
 
         .top-text h1 { 
-            font-size: 34px; 
+            font-size: 25px; 
             margin: 0 0 12px 0;
             white-space: nowrap;
             overflow: hidden;
@@ -68,7 +80,7 @@
         }
 
         .top-text p { 
-            font-size: 16px; 
+            font-size: 10px; 
             font-weight: 500;
             color: #444;
             margin: 0;
