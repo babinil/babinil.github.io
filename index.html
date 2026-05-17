@@ -2,26 +2,11 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>빙점(氷點)</title>
+    <title>By binil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #233B99 0%, #f0f9ff 100%);
-            --board-bg: rgba(255, 255, 255, 0.45);
-            --text-color: #1a1a1a;
-            --main-accent: #233B99;
-            --box-bg: rgba(255, 255, 255, 0.75);
-            --modal-bg: rgba(10, 18, 50, 0.6);
-        }
-
-        body.if-mode {
-            --bg-gradient: linear-gradient(135deg, #090d22 0%, #1a0510 100%);
-            --board-bg: rgba(15, 15, 25, 0.6);
-            --text-color: #ffffff;
-            --main-accent: #ff3b69;
-            --box-bg: rgba(20, 20, 30, 0.8);
-            --modal-bg: rgba(5, 5, 10, 0.85);
-        }
-
         body {
             margin: 0;
             padding: 0;
@@ -29,615 +14,195 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: var(--bg-gradient);
-            font-family: 'Pretendard', sans-serif;
+            font-family: 'Nanum Myeongjo', serif;
             overflow: hidden;
-            transition: background 1s ease;
+            color: white;
+            transition: background 1s ease-in-out;
+            transition: background 1s ease-in-out;
         }
 
-        .profile-board {
-            background: var(--board-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 30px;
-            padding: 40px 50px;
-            width: 780px;
-            max-height: 95vh;
-            box-sizing: border-box;
-            overflow-y: auto;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10;
-            position: relative;
-            transition: background 0.8s ease;
-
-            opacity: 0;
-            transform: scale(0.95);
-            animation: boardFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes boardFadeIn {
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .profile-board::-webkit-scrollbar { width: 6px; }
-        .profile-board::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
-
-        .if-toggle-btn {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: var(--text-color);
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            z-index: 20;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            
-            opacity: 0;
-            animation: fadeInBox 0.6s ease forwards;
-            animation-delay: 0.5s;
-        }
-        body.if-mode .if-toggle-btn {
-            background: rgba(255, 59, 105, 0.15);
-            border-color: rgba(255, 59, 105, 0.4);
-            color: #ff3b69;
-            box-shadow: 0 0 10px rgba(255, 59, 105, 0.2);
-        }
-        .if-toggle-btn:hover {
-            transform: scale(1.05);
-            background: var(--main-accent);
-            color: #fff;
-        }
-
-        .top-text {
-            text-align: center;
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 10px;
-            transition: color 0.5s;
-            width: 100%;
-        }
-
-        .top-text h1 { 
-            font-size: 30px; 
-            margin: 0 0 12px 0;
-            opacity: 0;
-            animation: fadeInBox 0.8s ease forwards;
-            animation-delay: 0.3s;
-        }
-
-        .top-text p { 
-            font-size: 16px; 
-            font-weight: 500;
-            color: var(--text-color);
-            opacity: 0;
-            margin: 0;
-            animation: fadeInBox 0.8s ease forwards;
-            animation-delay: 0.6s;
-        }
-        
-        .divider {
-            display: block;
-            width: 0px;
-            height: 1px;
-            background: linear-gradient(to right, transparent, rgba(150, 150, 150, 0.3), transparent);
-            margin: 20px auto; 
-            animation: expandWidth 0.8s ease forwards;
-            animation-delay: 0.8s; 
-        }
-
-        .divider-bottom {
-            display: block;
-            width: 0px;
-            height: 1px;
-            background: linear-gradient(to right, transparent, rgba(150, 150, 150, 0.3), transparent);
-            margin: 25px auto 20px auto; 
-            animation: expandWidth 0.8s ease forwards;
-            animation-delay: 1.8s;
-        }
-
-        @keyframes expandWidth {
-            from { width: 0px; }
-            to { width: 550px; }
-        }
-
-        .profile-section {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 40px; 
-            width: 100%;
-        }
-
-        .profile-card-set {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px; 
-            width: 230px;
-        }
-
-        .side-card {
-            width: 220px;
-            height: 300px;
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            border: 1px solid rgba(255,255,255,0.2);
-            background: #fff;
-            flex-shrink: 0;
-            opacity: 0;
-            animation: fadeInUpCard 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .side-card.left { animation-delay: 1.0s; }
-        .side-card.right { animation-delay: 1.2s; }
-
-        .card-img { width: 100%; height: 100%; object-fit: cover; }
-
-        @keyframes fadeInUpCard {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .profile-desc-box {
-            width: 100%;
-            background: var(--box-bg); 
-            border-radius: 15px; 
-            padding: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,255,255,0.15);
-            box-sizing: border-box;
-            font-size: 13px;
-            color: var(--text-color);
-            line-height: 1.5;
-            word-break: keep-all;
-            opacity: 0;
-            animation: fadeInBox 0.6s ease forwards;
-            transition: all 0.5s ease;
-
-            display: grid;
-            grid-template-columns: 65px 1fr;
-            text-align: left;
-            row-gap: 6px;
-        }
-
-        .profile-desc-box .char-header {
-            grid-column: span 2;
-            border-bottom: 1px solid rgba(150,150,150,0.2);
-            padding-bottom: 8px;
-            margin-bottom: 4px;
-        }
-        .profile-desc-box .char-header i {
-            display: block;
-            font-size: 12px;
-            color: var(--text-color);
-            opacity: 0.6;
-            margin-top: 4px;
-        }
-
-        .profile-desc-box.left { animation-delay: 1.4s; }
-        .profile-desc-box.right { animation-delay: 1.6s; }
-
-        @keyframes fadeInBox {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .story-trigger-container {
-            opacity: 0;
-            animation: fadeInBox 0.6s ease forwards;
-            animation-delay: 2.0s;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-
-        .story-btn {
-            background: rgba(150, 150, 150, 0.08);
-            color: var(--main-accent);
-            border: 1px solid rgba(150, 150, 150, 0.2);
-            padding: 12px 40px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .story-btn:hover {
-            background: var(--main-accent);
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-
-        .modal-overlay {
+        body::after {
+            content: "";
             position: fixed;
             top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: var(--modal-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 100;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
+            width: 100%; height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.04;
             pointer-events: none;
-            transition: opacity 0.5s ease;
+            z-index: 100;
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
+        .side-btn {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 150;
+            padding: 20px;
         }
 
-        .story-book-box {
-            background: var(--box-bg);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            width: 700px;
-            height: 75vh;
-            padding: 50px 60px;
-            border-radius: 24px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-            position: relative;
-            box-sizing: border-box;
-            color: var(--text-color);
+        .side-btn:hover {
+            color: #333333;
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .prev-side { left: 30px; }
+        .next-side { right: 30px; }
+
+        #main-link {
+            text-decoration: none;
+            color: white;
+            z-index: 10;
+        }
+
+        .circle-content {
+            width: 350px;
+            height: 350px;
             display: flex;
             flex-direction: column;
-            transform: translateY(30px);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s, color 0.5s;
-        }
-
-        .modal-overlay.active .story-book-box {
-            transform: translateY(0);
-        }
-
-        .book-header {
-            text-align: center;
-            margin-bottom: 35px;
-            border-bottom: 1px solid rgba(150, 150, 150, 0.2);
-            padding-bottom: 20px;
-        }
-
-        .book-header h2 {
-            font-size: 22px;
-            color: var(--text-color);
-            margin: 0 0 8px 0;
-            letter-spacing: 1px;
-        }
-
-        .book-header p {
-            font-size: 13px;
-            color: var(--main-accent);
-            margin: 0;
-            font-weight: 500;
-        }
-
-        .book-body {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 15px;
-            font-size: 15px;
-            line-height: 2.2;
-            letter-spacing: 0.5px;
-        }
-
-        .story-chapter { margin-bottom: 40px; }
-
-        .chapter-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--main-accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 10px;
-        }
-        .chapter-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(to right, rgba(150, 150, 150, 0.2), transparent);
+            text-align: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            transition: all 0.5s ease;
         }
 
-        .story-text { text-align: justify; margin: 0; text-indent: 10px; }
-
-        .close-btn {
-            position: absolute;
-            top: 25px; right: 25px;
-            background: none; border: none;
-            font-size: 28px; color: #888;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-        .close-btn:hover { color: var(--main-accent); }
-        
-        #snow-background {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            pointer-events: none; 
-            z-index: 1; 
-            overflow: hidden;
+        .circle-content:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.12);
         }
 
         .snow {
-            position: absolute; 
-            top: -20px;
+            position: fixed;
+            top: -10px;
             color: white;
             pointer-events: none;
-            animation: fall linear infinite; 
+            animation: fall linear infinite;
+            z-index: 1;
         }
 
-        @keyframes fall { 
-            0% { transform: translateY(0); }
-            100% { transform: translateY(105vh); }
-        }
+        @keyframes fall { to { transform: translate(100px, 100vh); } }
 
-        .pair-tags {
-            display: flex;
-            gap: 8px;
-            margin-top: 15px;
-            opacity: 0;
-            animation: fadeInBox 0.8s ease forwards;
-            animation-delay: 0.8s;
-        }
+        @media (max-width: 768px) {
+            .circle-content {
+                width: 60vw; 
+                height: 60vw;
+                max-width: 300px; 
+                height: 60vw;
+                max-width: 300px;
+                max-height: 300px;
+                margin-bottom: 100px;
+            }
 
-        .tag-chip {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--main-accent);
-            background: rgba(150, 150, 150, 0.08); 
-            border: 1px solid rgba(150, 150, 150, 0.2);
-            padding: 4px 10px;
-            border-radius: 20px; 
-            letter-spacing: 0.5px;
-            transition: all 0.5s;
+            h1 {
+                font-size: 22px;
+                font-size: 22px;
+            }
+
+            p {
+                font-size: 13px;
+                padding: 0 30px;
+            }
+
+            .side-btn {
+                font-size: 40px;
+                font-size: 40px;
+                padding: 10px;
+            }
+
         }
     </style>
 </head>
-<body>
+<body id="bg-body">
 
-    <div id="snow-background"></div>
+    <button class="side-btn prev-side" onclick="changePage(-1)">❮</button>
+    <button class="side-btn next-side" onclick="changePage(1)">❯</button>
 
-    <div class="profile-board">
-        
-        <button class="if-toggle-btn" onclick="toggleIfMode()">ROUTE : ORIGINAL</button>
-
-        <div class="top-text">
-            <h1 id="mainTitle">Judas & Iris</h1>
-            <i><p id="mainSub">"얼어붙은 바다에 가라앉은 유일한 온기"</p></i>
-            <div class="pair-tags" id="tagContainer">
-                <span class="tag-chip">#동거</span>
-                <span class="tag-chip">#감독관</span>
-                <span class="tag-chip">#피감독인</span>
-                <span class="tag-chip">#구원</span>
-                <span class="tag-chip">#소멸</span>
-            </div>
+    <a href="link1.html" id="main-link">
+        <div class="circle-content">
+            <h1 id="title"> </h1>
+            <p id="startDate">Loading...</p>
+            <span style="font-size: 11px; margin-top: 20px; opacity: 0.4;">CLICK TO ENTER</span>
         </div>
-
-        <div class="divider"></div>
-
-        <div class="profile-section">
-            
-            <div class="profile-card-set">
-                <div class="side-card left">
-                    <img src="image/J26.jpeg" alt="J" class="card-img" id="imgJudas">
-                </div>
-                <div class="profile-desc-box left" id="profileJudas">
-                    <div class="char-header">
-                        <strong class="name">Judas Day Wiseman</strong>
-                        <i class="quote">"I love you, so please melt down."</i>
-                    </div>
-                    <div><strong>Gender</strong></div><div class="gender">M</div>
-                    <div><strong>Age</strong></div><div class="age">26</div>
-                    <div><strong>Height</strong></div><div class="height">182</div>
-                    <div><strong>Ability</strong></div><div class="ability-val">Burst Switch[S]</div> <!-- 클래스 추가 -->
-                    <div><strong>Birth</strong></div><div class="birth">10/21</div>
-                </div>
-            </div>
-
-            <div class="profile-card-set">
-                <div class="side-card right">
-                    <img src="image/Rie.jpeg" alt="Rie" class="card-img" id="imgIris">
-                </div>
-                <div class="profile-desc-box right" id="profileIris">
-                    <div class="char-header">
-                        <strong class="name">Iris Aether</strong>
-                        <i class="quote">"I won't disappear. Promise."</i>
-                    </div>
-                    <div><strong>Gender</strong></div><div class="gender">F</div>
-                    <div><strong>Age</strong></div><div class="age">24</div>
-                    <div><strong>Height</strong></div><div class="height">164</div>
-                    <div><strong>Ability</strong></div><div class="ability-val">Purification[S]</div> <!-- 클래스 추가 -->
-                    <div><strong>Birth</strong></div><div class="birth">04/28</div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="divider-bottom"></div>
-
-        <div class="story-trigger-container">
-            <button class="story-btn" onclick="openStoryModal()">Our Story</button>
-        </div>
-
-    </div>
-    
-
-    <div class="modal-overlay" id="storyModal" onclick="closeStoryModal(event)">
-        <div class="story-book-box">
-            <button class="close-btn" onclick="document.getElementById('storyModal').classList.remove('active')">&times;</button>
-            
-            <div class="book-header">
-                <h2 id="modalBookTitle">氷點 : 두 사람의 이야기</h2>
-                <p id="modalBookSub">생각중이오</p>
-            </div>
-            
-            <div class="book-body" id="modalBookBody">
-            </div>
-        </div>
-    </div>
-
+    </a>
 
     <script>
-        const contentData = {
-            original: {
-                btnText: "ROUTE : ORIGINAL",
-                subTitle: '"얼어붙은 바다에 가라앉은 유일한 온기"',
-                tags: ["#동거", "#감독관", "#피감독인", "#구원", "#소멸"],
-                judas: {
-                    img: "image/J26.jpeg",
-                    quote: '"I love you, so please melt down."',
-                    ability: "Burst Switch[S]"
-                },
-                iris: {
-                    img: "image/Rie.jpeg",
-                    quote: '"I won't disappear. Promise."',
-                    ability: "Purification[S]"
-                },
-                story: {
-                    title: "氷點 : 두 사람의 이야기",
-                    sub: "스스슥스스슥",
-                    chapters: [
-                        { ch: "Chapter 1. 起 (만남)", text: "다스다스 주다스 사랑해" },
-                        { ch: "Chapter 2. 承 (변화)", text: "다스다스 주다스 사랑해" },
-                        { ch: "Chapter 3. 轉 (갈등)", text: "다스다스 주다스 사랑해" },
-                        { ch: "Chapter 4. 結 (운명)", text: "다스다스 주다스 사랑해" }
-                    ]
-                }
-            },
-            ifMode: {
-                btnText: "ROUTE : IF (BLACK)",
-                subTitle: '"얼어붙은 구원과 망가진 신앙"',
-                tags: ["#대립", "#IF", "#망령", "#구원", "#파멸"],
-                judas: {
-                    img: "image/Judas.png",
-                    quote: '"O Deus meus, fac me quaeso tuum."',
-                    ability: "Burst Switch[S]"
-                },
-                iris: {
-                    img: "image/Aurora.jpeg",
-                    quote: '"God is dead. Now I'm your only god."',
-                    ability: "Purification[S]"
-                },
-                story: {
-                    title: "氷點 : IF의 세계선",
-                    sub: "서로의 구원이자 파멸이 되기로 선택한 두 사람의 이야기",
-                    chapters: [
-                        { ch: "Chapter 1. 起 (엇갈림)", text: "IF 세계선의 만남 이야기 내용..." },
-                        { ch: "Chapter 2. 承 (기만)", text: "IF 세계선의 변화 이야기 내용..." },
-                        { ch: "Chapter 3. 轉 (파멸)", text: "IF 세계선의 내용..." },
-                        { ch: "Chapter 4. 結 (종극)", text: "결말..." }
-                    ]
-                }
-            }
-        };
-
-        let isIfMode = false;
-
-        function toggleIfMode() {
-            isIfMode = !isIfMode;
-            const mode = isIfMode ? 'ifMode' : 'original';
-            const data = contentData[mode];
-
-            if(isIfMode) {
-                document.body.classList.add('if-mode');
-            } else {
-                document.body.classList.remove('if-mode');
-            }
-
-            document.querySelector('.if-toggle-btn').innerText = data.btnText;
-            document.getElementById('mainSub').innerText = data.subTitle;
-
-            const tagContainer = document.getElementById('tagContainer');
-            tagContainer.innerHTML = '';
-            data.tags.forEach(t => {
-                const span = document.createElement('span');
-                span.className = 'tag-chip';
-                span.innerText = t;
-                tagContainer.appendChild(span);
-            });
-
-            document.getElementById('imgJudas').src = data.judas.img;
-            document.getElementById('profileJudas').querySelector('.quote').innerText = data.judas.quote;
-            document.getElementById('profileJudas').querySelector('.ability-val').innerText = data.judas.ability;
-
-            document.getElementById('imgIris').src = data.iris.img;
-            document.getElementById('profileIris').querySelector('.quote').innerText = data.iris.quote;
-            document.getElementById('profileIris').querySelector('.ability-val').innerText = data.iris.ability;
-        }
-
-        function openStoryModal() {
-            const mode = isIfMode ? 'ifMode' : 'original';
-            const storyData = contentData[mode].story;
-
-            document.getElementById("modalBookTitle").innerText = storyData.title;
-            document.getElementById("modalBookSub").innerText = storyData.sub;
-
-            const bodyContainer = document.getElementById("modalBookBody");
-            bodyContainer.innerHTML = '';
-
-            storyData.chapters.forEach(c => {
-                const chapterDiv = document.createElement('div');
-                chapterDiv.className = 'story-chapter';
-
-                const titleDiv = document.createElement('div');
-                titleDiv.className = 'chapter-title';
-                titleDiv.innerText = c.ch;
-
-                const textP = document.createElement('p');
-                textP.className = 'story-text';
-                textP.innerText = c.text;
-
-                chapterDiv.appendChild(titleDiv);
-                chapterDiv.appendChild(textP);
-                bodyContainer.appendChild(chapterDiv);
-            });
-
-            document.getElementById("storyModal").classList.add("active");
-        }
-
-        function closeStoryModal(e) {
-            if(e.target.id === "storyModal") {
-                document.getElementById("storyModal").classList.remove('active');
-            }
-        }
         
+
+        const pages = [
+            {
+                bg: "radial-gradient(circle at center, #233B99FF 0%, #f0f9ff 100%)",
+                title: "빙점(氷點)",
+                startDate: "2025-02-17",
+                link: "link1.html"
+            },
+            {
+                bg: "radial-gradient(circle at center, #951E1EFF 0%, #f0f9ff 100%)",
+                title: "론 x 벨라",
+                startDate: "2025-07-16",
+                link: "link2.html"
+            },
+            {
+                bg: "radial-gradient(circle at center, #4A6B8CFF 0%, #f0f9ff 100%)",
+                title: "C x 루나",
+                startDate: "2025-08-24",
+                link: "link3.html"
+            }
+        ];
+
+        let currentPage = 0;
+
+        function calculateDays(dateString) {
+            if (!dateString) return "";
+            if (!dateString) return "";
+            const start = new Date(dateString);
+            const today = new Date();
+            const diff = today - start;
+            const dayCount = Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
+
+            return `❤️ ${dayCount}`;
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            if (currentPage >= pages.length) currentPage = 0;
+            if (currentPage < 0) currentPage = pages.length - 1;
+
+            const data = pages[currentPage];
+
+            document.getElementById('bg-body').style.background = data.bg;
+            document.getElementById('title').innerText = data.title;
+            document.getElementById('startDate').innerText = calculateDays(data.startDate);
+            document.getElementById('main-link').href = data.link;
+
+        }
+
         function createSnow() {
-            const snowContainer = document.getElementById("snow-background");
             const snow = document.createElement("div");
             snow.className = "snow";
             snow.innerHTML = "❄";
             snow.style.left = Math.random() * 100 + "vw";
-            snow.style.fontSize = (Math.random() * 12 + 8) + "px";
-            
-            const fallDuration = Math.random() * 3 + 4;
-            snow.style.animationDuration = `${fallDuration}s`;
-            snow.style.opacity = Math.random() * 0.7 + 0.3;
-            
-            snowContainer.appendChild(snow);
-            setTimeout(() => snow.remove(), fallDuration * 1000);
+            snow.style.fontSize = (Math.random() * 10 + 10) + "px";
+            snow.style.animationDuration = (Math.random() * 3 + 4) + "s";
+            snow.style.opacity = Math.random() * 0.7;
+            document.body.appendChild(snow);
+            setTimeout(() => snow.remove(), 7000);
         }
         setInterval(createSnow, 150);
-    </script>
+        
 
+        document.getElementById('bg-body').style.background = pages[0].bg;
+        changePage(0);
+    </script>
 </body>
 </html>
+~
