@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>빙점(氷點)</title>
     <style>
-        /* 1. 기본 배경 설정 */
         body {
             margin: 0;
             padding: 0;
@@ -17,10 +16,9 @@
             overflow: hidden;
         }
 
-        /* --- 🤍 1. 중앙 하얀색 창 (Profile Board) --- */
         .profile-board {
-            background: rgba(255, 255, 255, 0.45); /* 하얀색 반투명 */
-            backdrop-filter: blur(20px); /* 뒤 배경 흐리게 해서 영롱한 느낌 */
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 30px;
@@ -35,7 +33,6 @@
             align-items: center;
             z-index: 10;
 
-            /* [단계 1] 유리창 인트로 애니메이션 (0초~1초) */
             opacity: 0;
             transform: scale(0.95);
             animation: boardFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -58,7 +55,6 @@
             scrollbar-width: none;
         }
 
-        /* --- ✍️ 2 & 3. 상단 텍스트 타이핑 애니메이션 (문법 오류 수정) --- */
         .top-text {
             text-align: center;
             color: #1a1a1a;
@@ -74,7 +70,6 @@
             white-space: nowrap;
             overflow: hidden; 
             width: 0;         
-            /* [단계 2] 유리창이 다 뜨는 1초 시점에 타이핑 시작 (1초~2초) */
             animation: textTyping 1s steps(12) forwards;
             animation-delay: 1s; 
         }
@@ -87,19 +82,15 @@
             white-space: nowrap;
             overflow: hidden; 
             width: 0;         
-            /* [단계 3] h1 타이핑이 끝나는 2초 시점에 타이핑 시작 (2초~3.2초) */
             animation: textTyping 1.2s steps(22) forwards;
             animation-delay: 2s; 
         }
 
-        /* 🔄 타이핑 통합 키프레임 이름 적용 */
         @keyframes textTyping {
             from { width: 0%; }
             to { width: 100%; }
         }
         
-
-        /* --- ➖ 4. 가로 줄 애니메이션 --- */
         .divider {
             display: block;
             position: relative;
@@ -109,7 +100,6 @@
             height: 1px;
             background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.3), transparent);
             margin: 30px auto; 
-            /* [단계 4] p 태그 타이핑이 끝나는 3.2초 시점에 가로선이 쫙 펼쳐짐 */
             animation: expandWidth 0.8s ease forwards;
             animation-delay: 3.2s; 
         }
@@ -119,7 +109,6 @@
             to { width: 550px; }
         }
 
-        /* --- 👥 프로필 레이아웃 (좌/우 배치) --- */
         .profile-section {
             display: flex;
             justify-content: center;
@@ -128,7 +117,6 @@
             width: 100%;
         }
 
-        /* 프로필 개별 묶음 (카드 + 프로필 창) */
         .profile-card-set {
             display: flex;
             flex-direction: column;
@@ -137,7 +125,6 @@
             width: 220px;
         }
 
-        /* --- 🎴 5. 이미지 카드 스타일 & 개별 시간차 애니메이션 --- */
         .side-card {
             width: 220px;
             height: 310px;
@@ -152,12 +139,10 @@
             animation: fadeInUpCard 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* [단계 5] 가로선까지 다 생기고 난 후, 왼쪽 카드 등장 */
         .side-card.left {
             animation-delay: 4.0s;
         }
 
-        /* 오른쪽 카드는 순차적으로 이어서 등장 */
         .side-card.right {
             animation-delay: 4.6s;
         }
@@ -173,7 +158,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- 📝 6 & 7. 프로필 텍스트창 애니메이션 --- */
         .profile-desc-box {
             width: 100%;
             background: rgba(255, 255, 255, 0.75); 
@@ -197,7 +181,6 @@
             row-gap: 10px
         }
 
-        /* 카드들이 자리를 잡은 후 설명창이 부드럽게 나타남 */
         .profile-desc-box.left {
             animation-delay: 5.2s;
         }
@@ -211,7 +194,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- ❄️ 눈송이 전용 스타일 --- */
         #snow-background {
             position: fixed;
             top: 0; left: 0;
@@ -237,31 +219,23 @@
 </head>
 <body>
 
-    <!-- 배경 눈 내리는 효과 -->
     <div id="snow-background"></div>
 
-    <!-- 🤍 1. 중앙 흰색 보드 창 -->
     <div class="profile-board">
 
-        <!-- 2 & 3. 상단 텍스트 -->
         <div class="top-text">
             <h1>Judas & Iris</h1>
             <i><p>"얼어붙은 바다에 가라앉은 유일한 온기"</p></i>
         </div>
 
-        <!-- 4. 가로선 -->
         <div class="divider"></div>
 
-        <!-- 프로필 섹션 영역 -->
         <div class="profile-section">
             
-            <!-- 👥 왼쪽 페어 세트 (카드 + 프로필 설명) -->
             <div class="profile-card-set">
-                <!-- 5. 왼쪽 카드 -->
                 <div class="side-card left">
                     <img src="image/J26.jpeg" alt="J" class="card-img">
                 </div>
-                <!-- 6. 왼쪽 설명 프로필창 -->
                 <div class="profile-desc-box left">
                     <strong>Judas Day Wiseman</strong><i>"I love you, so please melt down."</i>
                     <strong>Gender</strong>M<br>
@@ -271,13 +245,10 @@
                 </div>
             </div>
 
-            <!-- 👥 오른쪽 페어 세트 (카드 + 프로필 설명) -->
             <div class="profile-card-set">
-                <!-- 5. 오른쪽 카드 -->
                 <div class="side-card right">
                     <img src="image/Rie.jpeg" alt="Rie" class="card-img">
                 </div>
-                <!-- 7. 오른쪽 설명 프로필창 -->
                 <div class="profile-desc-box right">
                     <strong>Iris Aether</strong><i>"I won't disappear. Promise."</i>
                     <strong>Gender</strong>F<br>
@@ -287,12 +258,11 @@
                 </div>
             </div>
 
-        </div> <!-- profile-section 끝 -->
+        </div>
 
-    </div> <!-- profile-board 끝 -->
+    </div>
 
     <script>
-        // 눈 생성 로직 (그대로 유지)
         function createSnow() {
             const snowContainer = document.getElementById("snow-background");
             const snow = document.createElement("div");
