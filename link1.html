@@ -363,6 +363,27 @@
             0% { transform: translateY(0); }
             100% { transform: translateY(105vh); }
         }
+
+        .pair-tags {
+        display: flex;
+        gap: 8px;
+        margin-top: 15px;
+        opacity: 0;
+        animation: fadeInBox 0.8s ease forwards;
+        animation-delay: 2.8s; /* 타이핑 문구가 다 나오고 선이 나오기 직전에 삭 뜸 */
+        }
+
+        .tag-chip {
+        font-size: 11px;
+        font-weight: 600;
+        color: #233B99;
+        background: rgba(35, 59, 153, 0.08); /* 연한 블루 톤 배경 */
+        border: 1px solid rgba(35, 59, 153, 0.15);
+        padding: 4px 10px;
+        border-radius: 20px; /* 둥글게 */
+        letter-spacing: 0.5px;
+        }
+        
     </style>
 </head>
 <body>
@@ -374,7 +395,13 @@
         <div class="top-text">
             <h1>Judas & Iris</h1>
             <i><p>"얼어붙은 바다에 가라앉은 유일한 온기"</p></i>
-            <p>#동거   #감독관   #피감독인   #구원   #소멸</p>
+            <div class="pair-tags">
+            <span class="tag-chip">#동거</span>
+            <span class="tag-chip">#감독관</span>
+            <span class="tag-chip">#피감독인</span>
+            <span class="tag-chip">#구원</span>
+            <span class="tag-chip">#소멸</span>
+            </div>
         </div>
 
         <div class="divider"></div>
