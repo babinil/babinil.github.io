@@ -411,6 +411,32 @@
             letter-spacing: 0.5px;
             transition: all 0.5s;
         }
+
+        .story-text {
+            text-align: justify;
+            margin: 0;
+            text-indent: 10px;
+            color: var(--text-color);
+        }
+
+        .text-judas {
+            color: #0C54A0;
+            font-weight: 600;
+        }
+
+        body.if-mode .text-judas {
+            color: ##2563EB;
+        }
+
+        .text-iris {
+            color: #EAB308;
+            font-weight: 600;
+        }
+
+        body.if-mode .text-iris {
+            color: #FACC15;
+        }
+        
     </style>
 </head>
 <body>
@@ -625,7 +651,7 @@
 
                 const textP = document.createElement('p');
                 textP.className = 'story-text';
-                textP.innerText = c.text;
+                textP.innerHTML = c.text;
 
                 chapterDiv.appendChild(titleDiv);
                 chapterDiv.appendChild(textP);
