@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>J x 리에</title>
     <style>
-        /* 1. 배경 설정 */
+        /* 1. 기본 배경 설정 */
         body {
             margin: 0;
             padding: 0;
@@ -17,47 +17,66 @@
             overflow: hidden;
         }
 
-        .main-Layout {
+        /* --- 🤍 1. 중앙 하얀색 창 (Profile Board) --- */
+        .profile-board {
+            background: rgba(255, 255, 255, 0.45); /* 하얀색 반투명 */
+            backdrop-filter: blur(20px); /* 뒤 배경 흐리게 해서 영롱한 느낌 */
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 30px;
+            padding: 50px 60px;
+            width: 750px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100vh;
-            gap: 35px; 
-            margin-top: -200px;
-            z-index: 10; 
+            z-index: 10;
+
+            /* 인트로 애니메이션: 살짝 커지며 투명도 페이드인 */
+            opacity: 0;
+            transform: scale(0.95);
+            animation: boardFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0s;
         }
 
-        /* --- 상단 텍스트 타이핑 애니메이션 --- */
+        @keyframes boardFadeIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* --- ✍️ 2 & 3. 상단 텍스트 타이핑 애니메이션 --- */
         .top-text {
             text-align: center;
-            color: #333;
-            z-index: 20;
-            margin-top: -200px;
+            color: #1a1a1a;
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin-bottom: 10px;
         }
 
         .top-text h1 { 
-            font-size: 32px; 
-            margin-bottom: 10px;
+            font-size: 34px; 
+            margin: 0 0 12px 0;
             white-space: nowrap;
             overflow: hidden;
             width: 0;
+            letter-spacing: 1px;
             animation: typing 1s steps(12) forwards;
-            animation-delay: 0.5s;
+            animation-delay: 0.8s; /* 하얀 창이 뜨고 난 뒤 시작 */
         }
 
         .top-text p { 
             font-size: 16px; 
-            opacity: 0.8;
+            font-weight: 500;
+            color: #444;
+            margin: 0;
             white-space: nowrap;
             overflow: hidden;
             width: 0;
-            animation: typing 1.5s steps(22) forwards;
-            animation-delay: 1.8s;
+            animation: typing 1.2s steps(22) forwards;
+            animation-delay: 2.0s; /* h1 끝난 후 시작 */
         }
 
         @keyframes typing {
@@ -65,46 +84,62 @@
             to { width: 100%; }
         }
 
-        /* --- 가로 줄 애니메이션 --- */
+        /* --- ➖ 4. 가로 줄 애니메이션 --- */
         .divider {
             width: 0%;
             height: 1px;
-            background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.15), transparent);
-            margin: 1px 0;
+            background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.2), transparent);
+            margin: 15px 0 40px 0; /* 위아래 간격 확보 */
             animation: expandWidth 1s ease forwards;
             animation-delay: 3.5s;
         }
 
         @keyframes expandWidth {
             from { width: 0%; }
-            to { width: 70%; }
+            to { width: 85%; }
         }
 
-        /* --- 이미지 카드 애니메이션 --- */
-        .cards-section {
+        /* --- 👥 프로필 레이아웃 (좌/우 배치) --- */
+        .profile-section {
             display: flex;
             justify-content: center;
-            align-items: center;
-            gap: 20px;
+            align-items: flex-start;
+            gap: 60px; /* 두 프로필 사이의 간격 */
             width: 100%;
-            margin-top: -10px;
         }
 
+        /* 프로필 개별 묶음 (카드 + 프로필 창) */
+        .profile-card-set {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* 카드와 아래 텍스트창 사이 여백 */
+            width: 220px;
+        }
+
+        /* --- 🎴 5. 이미지 카드 스타일 & 개별 시간차 애니메이션 --- */
         .side-card {
-            width: 200px;
-            height: 300px;
-            border-radius: 20px;
+            width: 220px;
+            height: 310px;
+            border-radius: 18px;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            background: rgba(0, 150, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: transform 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            background: #fff;
             flex-shrink: 0;
-            margin: 0;
+            
             opacity: 0;
-            animation: fadeInUpCard 1s ease forwards;
-            animation-delay: 4.8s;
+            animation: fadeInUpCard 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* [카드] 왼쪽 먼저 등장 */
+        .side-card.left {
+            animation-delay: 4.5s;
+        }
+
+        /* [카드] 오른쪽 순차 등장 */
+        .side-card.right {
+            animation-delay: 5.3s;
         }
 
         .card-img {
@@ -114,115 +149,45 @@
         }
 
         @keyframes fadeInUpCard {
-            from { opacity: 0; transform: translateY(40px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- 💬 대화창 레이아웃 및 교체 애니메이션 --- */
-        .chat-container{
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 400px;
-            z-index: 10;
-        }
-
-        /* 말풍선 기본 베이스 */
-        .bubble {
-            position: relative;
-            padding: 12px 18px;
-            border-radius: 18px;
-            font-size: 15px;
-            line-height: 1.5;
-            max-width: 80%;
-            word-break: keep-all;
+        /* --- 📝 6 & 7. 하단 모서리가 둥근 프로필 텍스트창 --- */
+        .profile-desc-box {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.75); /* 카드 아래 선명도를 위해 약간 더 불투명하게 */
+            border-radius: 15px; /* 모서리가 둥근 네모 */
+            padding: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            opacity: 0; /* 처음엔 안보임 */
-        }
+            border: 1px solid rgba(255,255,255,0.5);
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.6;
+            word-break: keep-all;
 
-        /* 말풍선 내부의 실제 텍스트 글자 (처음엔 숨겼다가 점차 등장) */
-        .bubble-text {
             opacity: 0;
+            animation: fadeInBox 0.6s ease forwards;
         }
 
-        /* 말풍선 내부의 ... 점들 */
-        .typing-dots {
-            display: flex;
-            gap: 4px;
-            position: absolute;
-            top: 50%;
-            left: 18px;
-            transform: translateY(-50%);
+        /* [텍스트창] 왼쪽 먼저 등장 */
+        .profile-desc-box.left {
+            animation-delay: 6.2s;
         }
 
-        .typing-dots span {
-            width: 6px;
-            height: 6px;
-            background-color: #555;
-            border-radius: 50%;
-            animation: bounce 1s infinite;
-        }
-        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+        /* [텍스트창] 오른쪽 최종 등장 */
+        .profile-desc-box.right {
+            animation-delay: 7.0s;
         }
 
-        /* 내부 요소 페이드인/아웃용 */
-        @keyframes fadeIn { to { opacity: 1; } }
-        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
-
-        /* ====================================================
-           ⏳ 타임라인 제어 (핵심!)
-           ==================================================== */
-
-        /* 1. 왼쪽 대화 (카드가 다 올라온 후 6.0초에 시작) */
-        .left-bubble {
-            align-self: flex-start;
-            background: #66B3FF;
-            color: #333;
-            border-top-left-radius: 2px;
-            /* 6초에 아래에서 위로 말풍선 자체가 뿅 생겨남 */
-            animation: fadeInUp 0.5s ease 6.0s forwards; 
-        }
-        /* 왼쪽 점 : 6초에 켜져서 점멸하다가 7.5초(1.5초 뒤)에 사라짐 */
-        .left-bubble .typing-dots {
-            animation: fadeOut 0.3s ease 7.5s forwards;
-        }
-        /* 왼쪽 글자 : 점이 사라지는 7.5초에 타이밍 맞춰 등장 */
-        .left-bubble .bubble-text {
-            animation: fadeIn 0.5s ease 7.5s forwards;
-        }
-
-
-        /* 2. 오른쪽 대화 (왼쪽 글자가 다 나오고 조금 뒤인 8.5초에 시작) */
-        .right-bubble {
-            align-self: flex-end;
-            background: #FAF884;
-            color: #333;
-            border-top-right-radius: 2px;
-            /* 8.5초에 말풍선 자체가 생겨남 */
-            animation: fadeInUp 0.5s ease 8.5s forwards;
-        }
-        /* 오른쪽 점 : 8.5초에 생겨서 10.0초에 사라짐 */
-        .right-bubble .typing-dots {
-            animation: fadeOut 0.3s ease 10.0s forwards;
-        }
-        /* 오른쪽 글자 : 10.0초에 타이밍 맞춰 등장 */
-        .right-bubble .bubble-text {
-            animation: fadeIn 0.5s ease 10.0s forwards;
-        }
-
-
-        /* 말풍선 등장 애니메이션 */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes fadeInBox {
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- ❄️ 눈송이 전용 스타일 --- */
+        /* --- ❄️ 눈송이 전용 스타일 (그대로 유지) --- */
         #snow-background {
             position: fixed;
             top: 0; left: 0;
@@ -248,62 +213,56 @@
 </head>
 <body>
 
-    <!-- 눈송이 컨테이너 -->
+    <!-- 배경 눈 내리는 효과 -->
     <div id="snow-background"></div>
 
-    <!-- 전체 레이아웃 -->
-    <div class="main-Layout">
+    <!-- 🤍 1. 중앙 흰색 보드 창 -->
+    <div class="profile-board">
 
-        <!-- 상단 텍스트 -->
+        <!-- 2 & 3. 상단 텍스트 -->
         <div class="top-text">
             <h1>Judas & Iris</h1>
             <p>"얼어붙은 바다에 가라앉은 유일한 온기"</p>
         </div>
 
-        <!-- 가로선 -->
+        <!-- 4. 가로선 -->
         <div class="divider"></div>
 
-        <!-- 중간 카드 & 대화섹션 -->
-        <div class="cards-section">
-            <!-- 왼쪽 카드 -->
-            <div class="side-card left">
-                <img src="image/J26.jpeg" alt="J" class="card-img">
-            </div>
-
-            <!-- 💬 말풍선 대화창 (구조 변경됨!) -->
-            <div class="chat-container">
-                
-                <!-- 왼쪽 대화 덩어리 -->
-                <div class="bubble left-bubble">
-                    <!-- 입력 중 점 세개 -->
-                    <div class="typing-dots">
-                        <span></span><span></span><span></span>
-                    </div>
-                    <!-- 실제 내용 글자 -->
-                    <span class="bubble-text">"사랑합니다. 그러니까 녹으십시오."</span>
+        <!-- 프로필 섹션 영역 -->
+        <div class="profile-section">
+            
+            <!-- 👥 왼쪽 페어 세트 (카드 + 프로필 설명) -->
+            <div class="profile-card-set">
+                <!-- 5. 왼쪽 카드 -->
+                <div class="side-card left">
+                    <img src="image/J26.jpeg" alt="J" class="card-img">
                 </div>
-
-                <!-- 오른쪽 대화 덩어리 -->
-                <div class="bubble right-bubble">
-                    <!-- 입력 중 점 세개 -->
-                    <div class="typing-dots">
-                        <span></span><span></span><span></span>
-                    </div>
-                    <!-- 실제 내용 글자 -->
-                    <span class="bubble-text">"사라지지 않을게요. 약속."</span>
+                <!-- 6. 왼쪽 설명 프로필창 (여기에 원하는 텍스트를 적으세요!) -->
+                <div class="profile-desc-box left">
+                    <strong>주다스 (Judas)</strong><br>
+                    여기에 캐릭터의 소개나 프로필 텍스트를 자유롭게 채워 넣으실 수 있습니다.
                 </div>
-
             </div>
 
-            <!-- 오른쪽 카드 -->
-            <div class="side-card right">
-                <img src="image/Rie.jpeg" alt="Rie" class="card-img">
+            <!-- 👥 오른쪽 페어 세트 (카드 + 프로필 설명) -->
+            <div class="profile-card-set">
+                <!-- 5. 오른쪽 카드 -->
+                <div class="side-card right">
+                    <img src="image/Rie.jpeg" alt="Rie" class="card-img">
+                </div>
+                <!-- 7. 오른쪽 설명 프로필창 (여기에 원하는 텍스트를 적으세요!) -->
+                <div class="profile-desc-box right">
+                    <strong>아이리스 (Iris)</strong><br>
+                    여기에 리에(아이리스)의 프로필이나 소개 문구를 채워 넣으실 수 있습니다.
+                </div>
             </div>
-        </div>
-    </div>
+
+        </div> <!-- profile-section 끝 -->
+
+    </div> <!-- profile-board 끝 -->
 
     <script>
-        // 눈 생성 로직
+        // 눈 생성 로직 (그대로 유지)
         function createSnow() {
             const snowContainer = document.getElementById("snow-background");
             const snow = document.createElement("div");
