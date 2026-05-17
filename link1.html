@@ -239,5 +239,21 @@
         </div>
     </div>
 
+    <script>
+        // 눈 생성 로직 (동일)
+        function createSnow() {
+            const snow = document.createElement("div");
+            snow.className = "snow";
+            snow.innerHTML = "❄";
+            snow.style.left = Math.random() * 100 + "vw";
+            snow.style.fontSize = (Math.random() * 10 + 10) + "px";
+            snow.style.animationDuration = (Math.random() * 3 + 4) + "s";
+            snow.style.opacity = Math.random() * 0.7;
+            document.body.appendChild(snow);
+            setTimeout(() => snow.remove(), 7000);
+        }
+        setInterval(createSnow, 150);
+    </script>
+
 </body>
 </html>
