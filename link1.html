@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <title>빙점(氷點)</title>
     <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #233B99 0%, #f0f9ff 100%);
+            --board-bg: rgba(255, 255, 255, 0.45);
+            --text-color: #1a1a1a;
+            --main-accent: #233B99;
+            --box-bg: rgba(255, 255, 255, 0.75);
+            --modal-bg: rgba(10, 18, 50, 0.6);
+        }
+
+        body.if-mode {
+            --bg-gradient: linear-gradient(135deg, #090d22 0%, #1a0510 100%);
+            --board-bg: rgba(15, 15, 25, 0.6);
+            --text-color: #ffffff;
+            --main-accent: #ff3b69;
+            --box-bg: rgba(20, 20, 30, 0.8);
+            --modal-bg: rgba(5, 5, 10, 0.85);
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -11,27 +29,30 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #233B99 0%, #f0f9ff 100%);
+            background: var(--bg-gradient);
             font-family: 'Pretendard', sans-serif;
             overflow: hidden;
+            transition: background 1s ease;
         }
 
         .profile-board {
-            background: rgba(255, 255, 255, 0.45);
+            background: var(--board-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 30px;
-            padding: 50px 60px;
+            padding: 40px 50px;
             width: 780px;
-            max-height: 90vh;
+            max-height: 95vh;
             box-sizing: border-box;
             overflow-y: auto;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
             display: flex;
             flex-direction: column;
             align-items: center;
             z-index: 10;
+            position: relative;
+            transition: background 0.8s ease;
 
             opacity: 0;
             transform: scale(0.95);
@@ -42,69 +63,89 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        .profile-board::-webkit-scrollbar { display: none; }
-        .profile-board { -ms-overflow-style: none; scrollbar-width: none; }
+        .profile-board::-webkit-scrollbar { width: 6px; }
+        .profile-board::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
+
+        .if-toggle-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--text-color);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            z-index: 20;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            
+            opacity: 0;
+            animation: fadeInBox 0.6s ease forwards;
+            animation-delay: 0.5s;
+        }
+        body.if-mode .if-toggle-btn {
+            background: rgba(255, 59, 105, 0.15);
+            border-color: rgba(255, 59, 105, 0.4);
+            color: #ff3b69;
+            box-shadow: 0 0 10px rgba(255, 59, 105, 0.2);
+        }
+        .if-toggle-btn:hover {
+            transform: scale(1.05);
+            background: var(--main-accent);
+            color: #fff;
+        }
 
         .top-text {
             text-align: center;
-            color: #1a1a1a;
+            color: var(--text-color);
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-bottom: 10px;
+            transition: color 0.5s;
+            width: 100%;
         }
 
         .top-text h1 { 
             font-size: 30px; 
             margin: 0 0 12px 0;
-            white-space: nowrap;
-            overflow: hidden; 
-            width: 0;         
-            animation: textTyping 1s steps(12) forwards;
-            animation-delay: 1s; 
+            opacity: 0;
+            animation: fadeInBox 0.8s ease forwards;
+            animation-delay: 0.3s;
         }
 
         .top-text p { 
             font-size: 16px; 
             font-weight: 500;
-            color: #444;
+            color: var(--text-color);
+            opacity: 0;
             margin: 0;
-            white-space: nowrap;
-            overflow: hidden; 
-            width: 0;         
-            animation: textTyping 1.2s steps(22) forwards;
-            animation-delay: 2s; 
-        }
-
-        @keyframes textTyping {
-            from { width: 0%; }
-            to { width: 100%; }
+            animation: fadeInBox 0.8s ease forwards;
+            animation-delay: 0.6s;
         }
         
         .divider {
             display: block;
-            position: relative;
-            clear: both;
-            flex-shrink: 0;
             width: 0px;
             height: 1px;
-            background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.3), transparent);
-            margin: 30px auto; 
+            background: linear-gradient(to right, transparent, rgba(150, 150, 150, 0.3), transparent);
+            margin: 20px auto; 
             animation: expandWidth 0.8s ease forwards;
-            animation-delay: 3.2s; 
+            animation-delay: 0.8s; 
         }
 
         .divider-bottom {
             display: block;
-            position: relative;
-            clear: both;
-            flex-shrink: 0;
             width: 0px;
             height: 1px;
-            background: linear-gradient(to right, transparent, rgba(35, 59, 153, 0.4), transparent);
-            margin: 40px auto 25px auto; 
+            background: linear-gradient(to right, transparent, rgba(150, 150, 150, 0.3), transparent);
+            margin: 25px auto 20px auto; 
             animation: expandWidth 0.8s ease forwards;
-            animation-delay: 6.4s;
+            animation-delay: 1.8s;
         }
 
         @keyframes expandWidth {
@@ -116,7 +157,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            gap: 60px; 
+            gap: 40px; 
             width: 100%;
         }
 
@@ -124,25 +165,25 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px; 
+            gap: 15px; 
             width: 230px;
         }
 
         .side-card {
             width: 220px;
-            height: 310px;
+            height: 300px;
             border-radius: 18px;
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
             background: #fff;
             flex-shrink: 0;
             opacity: 0;
             animation: fadeInUpCard 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .side-card.left { animation-delay: 4.0s; }
-        .side-card.right { animation-delay: 4.6s; }
+        .side-card.left { animation-delay: 1.0s; }
+        .side-card.right { animation-delay: 1.2s; }
 
         .card-img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -153,40 +194,42 @@
 
         .profile-desc-box {
             width: 100%;
-            background: rgba(255, 255, 255, 0.75); 
+            background: var(--box-bg); 
             border-radius: 15px; 
-            padding: 20px;
+            padding: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.15);
             box-sizing: border-box;
-            font-size: 14px;
-            color: #333;
-            line-height: 1.6;
+            font-size: 13px;
+            color: var(--text-color);
+            line-height: 1.5;
             word-break: keep-all;
             opacity: 0;
             animation: fadeInBox 0.6s ease forwards;
+            transition: all 0.5s ease;
 
             display: grid;
             grid-template-columns: 65px 1fr;
             text-align: left;
-            row-gap: 10px;
+            row-gap: 6px;
         }
 
         .profile-desc-box .char-header {
             grid-column: span 2;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
+            border-bottom: 1px solid rgba(150,150,150,0.2);
             padding-bottom: 8px;
             margin-bottom: 4px;
         }
         .profile-desc-box .char-header i {
             display: block;
             font-size: 12px;
-            color: #666;
+            color: var(--text-color);
+            opacity: 0.6;
             margin-top: 4px;
         }
 
-        .profile-desc-box.left { animation-delay: 5.2s; }
-        .profile-desc-box.right { animation-delay: 5.8s; }
+        .profile-desc-box.left { animation-delay: 1.4s; }
+        .profile-desc-box.right { animation-delay: 1.6s; }
 
         @keyframes fadeInBox {
             from { opacity: 0; transform: translateY(15px); }
@@ -196,16 +239,16 @@
         .story-trigger-container {
             opacity: 0;
             animation: fadeInBox 0.6s ease forwards;
-            animation-delay: 7.0s;
+            animation-delay: 2.0s;
             width: 100%;
             display: flex;
             justify-content: center;
         }
 
         .story-btn {
-            background: rgba(35, 59, 153, 0.08);
-            color: #233B99;
-            border: 1px solid rgba(35, 59, 153, 0.2);
+            background: rgba(150, 150, 150, 0.08);
+            color: var(--main-accent);
+            border: 1px solid rgba(150, 150, 150, 0.2);
             padding: 12px 40px;
             border-radius: 50px;
             font-size: 14px;
@@ -213,28 +256,26 @@
             letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(35, 59, 153, 0.05);
         }
 
         .story-btn:hover {
-            background: #233B99;
+            background: var(--main-accent);
             color: #fff;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(35, 59, 153, 0.25);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
         .modal-overlay {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            background: rgba(10, 18, 50, 0.6);
+            background: var(--modal-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             z-index: 100;
             display: flex;
             justify-content: center;
             align-items: center;
-            
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.5s ease;
@@ -246,21 +287,20 @@
         }
 
         .story-book-box {
-            background: rgba(255, 255, 255, 0.92);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            background: var(--box-bg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             width: 700px;
             height: 75vh;
             padding: 50px 60px;
             border-radius: 24px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
             position: relative;
             box-sizing: border-box;
-            
+            color: var(--text-color);
             display: flex;
             flex-direction: column;
-
             transform: translateY(30px);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s, color 0.5s;
         }
 
         .modal-overlay.active .story-book-box {
@@ -270,20 +310,20 @@
         .book-header {
             text-align: center;
             margin-bottom: 35px;
-            border-bottom: 1px solid rgba(35, 59, 153, 0.15);
+            border-bottom: 1px solid rgba(150, 150, 150, 0.2);
             padding-bottom: 20px;
         }
 
         .book-header h2 {
             font-size: 22px;
-            color: #1a1a1a;
+            color: var(--text-color);
             margin: 0 0 8px 0;
             letter-spacing: 1px;
         }
 
         .book-header p {
             font-size: 13px;
-            color: #233B99;
+            color: var(--main-accent);
             margin: 0;
             font-weight: 500;
         }
@@ -292,26 +332,17 @@
             flex: 1;
             overflow-y: auto;
             padding-right: 15px;
-            font-family: 'KoPub Batang', 'Nanum Myeongjo', 'GyeonggiBatang', serif;
             font-size: 15px;
-            color: #2b2b2b;
             line-height: 2.2;
             letter-spacing: 0.5px;
         }
 
-        .book-body::-webkit-scrollbar { width: 4px; }
-        .book-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.03); }
-        .book-body::-webkit-scrollbar-thumb { background: rgba(35, 59, 153, 0.2); border-radius: 10px; }
-
-        .story-chapter {
-            margin-bottom: 40px;
-        }
+        .story-chapter { margin-bottom: 40px; }
 
         .chapter-title {
-            font-family: 'Pretendard', sans-serif;
             font-size: 13px;
             font-weight: 700;
-            color: #233B99;
+            color: var(--main-accent);
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 15px;
@@ -323,14 +354,10 @@
             content: '';
             flex: 1;
             height: 1px;
-            background: linear-gradient(to right, rgba(35, 59, 153, 0.15), transparent);
+            background: linear-gradient(to right, rgba(150, 150, 150, 0.2), transparent);
         }
 
-        .story-text {
-            text-align: justify;
-            margin: 0;
-            text-indent: 10px;
-        }
+        .story-text { text-align: justify; margin: 0; text-indent: 10px; }
 
         .close-btn {
             position: absolute;
@@ -340,7 +367,7 @@
             cursor: pointer;
             transition: color 0.2s;
         }
-        .close-btn:hover { color: #000; }
+        .close-btn:hover { color: var(--main-accent); }
         
         #snow-background {
             position: fixed;
@@ -365,25 +392,25 @@
         }
 
         .pair-tags {
-        display: flex;
-        gap: 8px;
-        margin-top: 15px;
-        opacity: 0;
-        animation: fadeInBox 0.8s ease forwards;
-        animation-delay: 2.8s; /* 타이핑 문구가 다 나오고 선이 나오기 직전에 삭 뜸 */
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+            opacity: 0;
+            animation: fadeInBox 0.8s ease forwards;
+            animation-delay: 0.8s;
         }
 
         .tag-chip {
-        font-size: 11px;
-        font-weight: 600;
-        color: #233B99;
-        background: rgba(35, 59, 153, 0.08); /* 연한 블루 톤 배경 */
-        border: 1px solid rgba(35, 59, 153, 0.15);
-        padding: 4px 10px;
-        border-radius: 20px; /* 둥글게 */
-        letter-spacing: 0.5px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--main-accent);
+            background: rgba(150, 150, 150, 0.08); 
+            border: 1px solid rgba(150, 150, 150, 0.2);
+            padding: 4px 10px;
+            border-radius: 20px; 
+            letter-spacing: 0.5px;
+            transition: all 0.5s;
         }
-        
     </style>
 </head>
 <body>
@@ -391,16 +418,18 @@
     <div id="snow-background"></div>
 
     <div class="profile-board">
+        
+        <button class="if-toggle-btn" onclick="toggleIfMode()">ROUTE : ORIGINAL</button>
 
         <div class="top-text">
-            <h1>Judas & Iris</h1>
-            <i><p>"얼어붙은 바다에 가라앉은 유일한 온기"</p></i>
-            <div class="pair-tags">
-            <span class="tag-chip">#동거</span>
-            <span class="tag-chip">#감독관</span>
-            <span class="tag-chip">#피감독인</span>
-            <span class="tag-chip">#구원</span>
-            <span class="tag-chip">#소멸</span>
+            <h1 id="mainTitle">Judas & Iris</h1>
+            <i><p id="mainSub">"얼어붙은 바다에 가라앉은 유일한 온기"</p></i>
+            <div class="pair-tags" id="tagContainer">
+                <span class="tag-chip">#동거</span>
+                <span class="tag-chip">#감독관</span>
+                <span class="tag-chip">#피감독인</span>
+                <span class="tag-chip">#구원</span>
+                <span class="tag-chip">#소멸</span>
             </div>
         </div>
 
@@ -410,35 +439,35 @@
             
             <div class="profile-card-set">
                 <div class="side-card left">
-                    <img src="image/J26.jpeg" alt="J" class="card-img">
+                    <img src="image/J26.jpeg" alt="J" class="card-img" id="imgJudas">
                 </div>
-                <div class="profile-desc-box left">
+                <div class="profile-desc-box left" id="profileJudas">
                     <div class="char-header">
-                        <strong>Judas Day Wiseman</strong>
-                        <i>"I love you, so please melt down."</i>
+                        <strong class="name">Judas Day Wiseman</strong>
+                        <i class="quote">"I love you, so please melt down."</i>
                     </div>
-                    <div><strong>Gender</strong></div><div>M</div>
-                    <div><strong>Age</strong></div><div>26</div>
-                    <div><strong>Height</strong></div><div>182</div>
-                    <div><strong>Ability</strong></div><div>Burst Switch[S]</div>
-                    <div><strong>Birth</strong></div><div>10/21</div>
+                    <div><strong>Gender</strong></div><div class="gender">M</div>
+                    <div><strong>Age</strong></div><div class="age">26</div>
+                    <div><strong>Height</strong></div><div class="height">182</div>
+                    <div><strong>Ability</strong></div><div class="ability-val">Burst Switch[S]</div> <!-- 클래스 추가 -->
+                    <div><strong>Birth</strong></div><div class="birth">10/21</div>
                 </div>
             </div>
 
             <div class="profile-card-set">
                 <div class="side-card right">
-                    <img src="image/Rie.jpeg" alt="Rie" class="card-img">
+                    <img src="image/Rie.jpeg" alt="Rie" class="card-img" id="imgIris">
                 </div>
-                <div class="profile-desc-box right">
+                <div class="profile-desc-box right" id="profileIris">
                     <div class="char-header">
-                        <strong>Iris Aether</strong>
-                        <i>"I won't disappear. Promise."</i>
+                        <strong class="name">Iris Aether</strong>
+                        <i class="quote">"I won't disappear. Promise."</i>
                     </div>
-                    <div><strong>Gender</strong></div><div>F</div>
-                    <div><strong>Age</strong></div><div>24</div>
-                    <div><strong>Height</strong></div><div>164</div>
-                    <div><strong>Ability</strong></div><div>Purification[S]</div>
-                    <div><strong>Birth</strong></div><div>04/28</div>
+                    <div><strong>Gender</strong></div><div class="gender">F</div>
+                    <div><strong>Age</strong></div><div class="age">24</div>
+                    <div><strong>Height</strong></div><div class="height">164</div>
+                    <div><strong>Ability</strong></div><div class="ability-val">Purification[S]</div> <!-- 클래스 추가 -->
+                    <div><strong>Birth</strong></div><div class="birth">04/28</div>
                 </div>
             </div>
 
@@ -458,45 +487,131 @@
             <button class="close-btn" onclick="document.getElementById('storyModal').classList.remove('active')">&times;</button>
             
             <div class="book-header">
-                <h2>氷點 : 두 사람의 이야기</h2>
-                <p>생각중이오</p></p>
+                <h2 id="modalBookTitle">氷點 : 두 사람의 이야기</h2>
+                <p id="modalBookSub">생각중이오</p>
             </div>
             
-            <div class="book-body">
-                
-                <div class="story-chapter">
-                    <div class="chapter-title">Chapter 1. 起 (만남)</div>
-                    <p class="story-text">
-                        다스다스 주다스 사랑해
-                    </p>
-                </div>
-
-                <div class="story-chapter">
-                    <div class="chapter-title">Chapter 2. 承 (변화)</div>
-                    <p class="story-text">
-                        다스다스 주다스 사랑해
-
-                <div class="story-chapter">
-                    <div class="chapter-title">Chapter 3. 轉 (갈등)</div>
-                    <p class="story-text">
-                        다스다스 주다스 사랑해
-                    </p>
-                </div>
-
-                <div class="story-chapter">
-                    <div class="chapter-title">Chapter 4. 結 (운명)</div>
-                    <p class="story-text">
-                        다스다스 주다스 사랑해
-                    </p>
-                </div>
-
+            <div class="book-body" id="modalBookBody">
             </div>
         </div>
     </div>
 
 
     <script>
+        const contentData = {
+            original: {
+                btnText: "ROUTE : ORIGINAL",
+                subTitle: '"얼어붙은 바다에 가라앉은 유일한 온기"',
+                tags: ["#동거", "#감독관", "#피감독인", "#구원", "#소멸"],
+                judas: {
+                    img: "image/J26.jpeg",
+                    quote: '"I love you, so please melt down."',
+                    ability: "Burst Switch[S]"
+                },
+                iris: {
+                    img: "image/Rie.jpeg",
+                    quote: '"I won't disappear. Promise."',
+                    ability: "Purification[S]"
+                },
+                story: {
+                    title: "氷點 : 두 사람의 이야기",
+                    sub: "스스슥스스슥",
+                    chapters: [
+                        { ch: "Chapter 1. 起 (만남)", text: "다스다스 주다스 사랑해" },
+                        { ch: "Chapter 2. 承 (변화)", text: "다스다스 주다스 사랑해" },
+                        { ch: "Chapter 3. 轉 (갈등)", text: "다스다스 주다스 사랑해" },
+                        { ch: "Chapter 4. 結 (운명)", text: "다스다스 주다스 사랑해" }
+                    ]
+                }
+            },
+            ifMode: {
+                btnText: "ROUTE : IF (BLACK)",
+                subTitle: '"얼어붙은 구원과 망가진 신앙"',
+                tags: ["#대립", "#IF", "#망령", "#구원", "#파멸"],
+                judas: {
+                    img: "image/Judas.png",
+                    quote: '"O Deus meus, fac me quaeso tuum."',
+                    ability: "Burst Switch[S]"
+                },
+                iris: {
+                    img: "image/Aurora.jpeg",
+                    quote: '"God is dead. Now I'm your only god."',
+                    ability: "Purification[S]"
+                },
+                story: {
+                    title: "氷點 : IF의 세계선",
+                    sub: "서로의 구원이자 파멸이 되기로 선택한 두 사람의 이야기",
+                    chapters: [
+                        { ch: "Chapter 1. 起 (엇갈림)", text: "IF 세계선의 만남 이야기 내용..." },
+                        { ch: "Chapter 2. 承 (기만)", text: "IF 세계선의 변화 이야기 내용..." },
+                        { ch: "Chapter 3. 轉 (파멸)", text: "IF 세계선의 내용..." },
+                        { ch: "Chapter 4. 結 (종극)", text: "결말..." }
+                    ]
+                }
+            }
+        };
+
+        let isIfMode = false;
+
+        function toggleIfMode() {
+            isIfMode = !isIfMode;
+            const mode = isIfMode ? 'ifMode' : 'original';
+            const data = contentData[mode];
+
+            if(isIfMode) {
+                document.body.classList.add('if-mode');
+            } else {
+                document.body.classList.remove('if-mode');
+            }
+
+            document.querySelector('.if-toggle-btn').innerText = data.btnText;
+            document.getElementById('mainSub').innerText = data.subTitle;
+
+            const tagContainer = document.getElementById('tagContainer');
+            tagContainer.innerHTML = '';
+            data.tags.forEach(t => {
+                const span = document.createElement('span');
+                span.className = 'tag-chip';
+                span.innerText = t;
+                tagContainer.appendChild(span);
+            });
+
+            document.getElementById('imgJudas').src = data.judas.img;
+            document.getElementById('profileJudas').querySelector('.quote').innerText = data.judas.quote;
+            document.getElementById('profileJudas').querySelector('.ability-val').innerText = data.judas.ability;
+
+            document.getElementById('imgIris').src = data.iris.img;
+            document.getElementById('profileIris').querySelector('.quote').innerText = data.iris.quote;
+            document.getElementById('profileIris').querySelector('.ability-val').innerText = data.iris.ability;
+        }
+
         function openStoryModal() {
+            const mode = isIfMode ? 'ifMode' : 'original';
+            const storyData = contentData[mode].story;
+
+            document.getElementById("modalBookTitle").innerText = storyData.title;
+            document.getElementById("modalBookSub").innerText = storyData.sub;
+
+            const bodyContainer = document.getElementById("modalBookBody");
+            bodyContainer.innerHTML = '';
+
+            storyData.chapters.forEach(c => {
+                const chapterDiv = document.createElement('div');
+                chapterDiv.className = 'story-chapter';
+
+                const titleDiv = document.createElement('div');
+                titleDiv.className = 'chapter-title';
+                titleDiv.innerText = c.ch;
+
+                const textP = document.createElement('p');
+                textP.className = 'story-text';
+                textP.innerText = c.text;
+
+                chapterDiv.appendChild(titleDiv);
+                chapterDiv.appendChild(textP);
+                bodyContainer.appendChild(chapterDiv);
+            });
+
             document.getElementById("storyModal").classList.add("active");
         }
 
