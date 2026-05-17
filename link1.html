@@ -99,7 +99,8 @@
 
         /* --- ➖ 4. 가로 줄 애니메이션 --- */
         .divider {
-            width: 0%;
+            display: block;
+            width: 0px;
             height: 1px;
             background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.2), transparent);
             margin: 15px 0 40px 0; /* 위아래 간격 확보 */
@@ -108,8 +109,8 @@
         }
 
         @keyframes expandWidth {
-            from { width: 0%; }
-            to { width: 85%; }
+            from { width: 0px; }
+            to { width: 550px; }
         }
 
         /* --- 👥 프로필 레이아웃 (좌/우 배치) --- */
