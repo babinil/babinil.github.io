@@ -183,6 +183,18 @@
 
         .typing {animation: typingFade 1.5s ease-in-out forwards;}
         .right-typing (animation-delay: 2s;}
+
+        /* 눈송이 */
+        .snow {
+            position: fixed;
+            top: -10px;
+            color: white;
+            pointer-events: none;
+            animation: fall linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes fall { to { transform: translate(100px, 100vh); } }
         
     </style>
 </head>
