@@ -16,6 +16,7 @@
             overflow: hidden;
         }
 
+        /* 🤍 1. 중앙 흰색 보드 (내부 스크롤 가능하도록 설정) */
         .profile-board {
             background: rgba(255, 255, 255, 0.45);
             backdrop-filter: blur(20px);
@@ -23,8 +24,8 @@
             border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 30px;
             padding: 50px 60px;
-            width: 750px;
-            max-height: 85vh;
+            width: 780px;
+            max-height: 90vh; /* 화면에 맞춰 적절히 늘어남 */
             box-sizing: border-box;
             overflow-y: auto;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
@@ -36,25 +37,17 @@
             opacity: 0;
             transform: scale(0.95);
             animation: boardFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            animation-delay: 0s;
         }
 
         @keyframes boardFadeIn {
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        .profile-board::-webkit-scrollbar {
-            display: none;
-        }
+        /* 보드 내부 스크롤바 숨기기 */
+        .profile-board::-webkit-scrollbar { display: none; }
+        .profile-board { -ms-overflow-style: none; scrollbar-width: none; }
 
-        .profile-board{
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
+        /* ✍️ 상단 타이핑 텍스트 */
         .top-text {
             text-align: center;
             color: #1a1a1a;
@@ -91,6 +84,7 @@
             to { width: 100%; }
         }
         
+        /* ➖ 첫 번째 가로선 (프로필 위) */
         .divider {
             display: block;
             position: relative;
@@ -104,11 +98,26 @@
             animation-delay: 3.2s; 
         }
 
+        /* ➖ 두 번째 가로선 (프로필 아래 서사 진입용) */
+        .divider-bottom {
+            display: block;
+            position: relative;
+            clear: both;
+            flex-shrink: 0;
+            width: 0px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(35, 59, 153, 0.4), transparent);
+            margin: 40px auto 25px auto; 
+            animation: expandWidth 0.8s ease forwards;
+            animation-delay: 6.4s; /* 프로필 창 다 뜨고 난 후 스르륵 */
+        }
+
         @keyframes expandWidth {
             from { width: 0px; }
             to { width: 550px; }
         }
 
+        /* 👥 프로필 레이아웃 */
         .profile-section {
             display: flex;
             justify-content: center;
@@ -122,7 +131,7 @@
             flex-direction: column;
             align-items: center;
             gap: 20px; 
-            width: 220px;
+            width: 230px;
         }
 
         .side-card {
@@ -134,30 +143,21 @@
             border: 1px solid rgba(255,255,255,0.3);
             background: #fff;
             flex-shrink: 0;
-            
             opacity: 0;
             animation: fadeInUpCard 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .side-card.left {
-            animation-delay: 4.0s;
-        }
+        .side-card.left { animation-delay: 4.0s; }
+        .side-card.right { animation-delay: 4.6s; }
 
-        .side-card.right {
-            animation-delay: 4.6s;
-        }
-
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .card-img { width: 100%; height: 100%; object-fit: cover; }
 
         @keyframes fadeInUpCard {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* 📝 프로필 설명창 (Grid 레이아웃 버그 수정 및 가독성 업) */
         .profile-desc-box {
             width: 100%;
             background: rgba(255, 255, 255, 0.75); 
@@ -166,62 +166,80 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             border: 1px solid rgba(255,255,255,0.5);
             box-sizing: border-box;
-            text-align: center;
             font-size: 14px;
             color: #333;
             line-height: 1.6;
             word-break: keep-all;
-
             opacity: 0;
             animation: fadeInBox 0.6s ease forwards;
 
             display: grid;
-            grid-template-column: 60px 1fr;
+            grid-template-columns: 65px 1fr; /* 오타 수정: grid-template-columns */
             text-align: left;
-            row-gap: 10px
+            row-gap: 10px;
         }
 
-        .profile-desc-box.left {
-            animation-delay: 5.2s;
+        /* 이름과 한줄 대사는 맨 위칸 전체를 차지하도록 셋팅 */
+        .profile-desc-box .char-header {
+            grid-column: span 2;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            padding-bottom: 8px;
+            margin-bottom: 4px;
+        }
+        .profile-desc-box .char-header i {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
         }
 
-        .profile-desc-box.right {
-            animation-delay: 5.8s;
-        }
+        .profile-desc-box.left { animation-delay: 5.2s; }
+        .profile-desc-box.right { animation-delay: 5.8s; }
 
         @keyframes fadeInBox {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .logbook-btn {
-            grid-column: span 2; /* 그리드 칸을 가로로 길게 합치기 */
-            margin-top: 10px;
-            padding: 8px 0;
-            background: rgba(35, 59, 153, 0.1);
+        /* 📖 하단 공통 스토리 서사 버튼 */
+        .story-trigger-container {
+            opacity: 0;
+            animation: fadeInBox 0.6s ease forwards;
+            animation-delay: 7.0s; /* 모든 연출이 끝나고 최종 등장 */
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .story-btn {
+            background: rgba(35, 59, 153, 0.08);
             color: #233B99;
             border: 1px solid rgba(35, 59, 153, 0.2);
-            border-radius: 8px;
-            font-size: 12px;
+            padding: 12px 40px;
+            border-radius: 50px;
+            font-size: 14px;
             font-weight: 600;
+            letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-align: center;
+            box-shadow: 0 4px 15px rgba(35, 59, 153, 0.05);
         }
 
-        .logbook-btn:hover {
-            background: rgba(35, 59, 153, 0.8);
+        .story-btn:hover {
+            background: #233B99;
             color: #fff;
-            box-shadow: 0 4px 10px rgba(35, 59, 153, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(35, 59, 153, 0.25);
         }
 
+        /* 🎬 소설풍 서사 팝업창 오버레이 */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            background: rgba(10, 18, 50, 0.5);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(10, 18, 50, 0.6); /* 딥블루 시네마틱 톤 */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             z-index: 100;
             display: flex;
             justify-content: center;
@@ -229,7 +247,7 @@
             
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.5s ease;
         }
 
         .modal-overlay.active {
@@ -237,78 +255,109 @@
             pointer-events: auto;
         }
 
-        .logbook-box {
-            background: rgba(255, 255, 255, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            width: 680px;
-            padding: 40px;
+        /* 📖 원고지/소설책 느낌의 대형 서사창 */
+        .story-book-box {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            width: 700px;
+            height: 75vh;
+            padding: 50px 60px;
             border-radius: 24px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
             position: relative;
-            max-height: 80vh;
-            overflow-y: auto;
+            box-sizing: border-box;
+            
+            display: flex;
+            flex-direction: column;
 
-            transform: translateY(20px);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(30px);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .modal-overlay.active .logbook-box {
+        .modal-overlay.active .story-book-box {
             transform: translateY(0);
         }
 
-        .logbook-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1a1a1a;
-            border-bottom: 2px solid #233B99;
-            padding-bottom: 10px;
-            margin-bottom: 25px;
+        /* 소설 제목 */
+        .book-header {
             text-align: center;
+            margin-bottom: 35px;
+            border-bottom: 1px solid rgba(35, 59, 153, 0.15);
+            padding-bottom: 20px;
+        }
+
+        .book-header h2 {
+            font-size: 22px;
+            color: #1a1a1a;
+            margin: 0 0 8px 0;
             letter-spacing: 1px;
         }
 
-        .timeline-section {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
+        .book-header p {
+            font-size: 13px;
+            color: #233B99;
+            margin: 0;
+            font-weight: 500;
         }
 
-        .timeline-node {
-            display: grid;
-            grid-template-columns: 90px 1fr;
-            align-items: flex-start;
+        /* 소설 본문 스크롤 영역 (진짜 문학작품처럼 연출) */
+        .book-body {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 15px;
+            font-family: 'KoPub Batang', 'Nanum Myeongjo', 'GyeonggiBatang', serif; /* 소설 감성 명조체 우선 배정 */
+            font-size: 15px;
+            color: #2b2b2b;
+            line-height: 2.2; /* 소설 특유의 여유로운 줄간격 */
+            letter-spacing: 0.5px;
         }
 
-        .timeline-tag {
+        /* 소설 본문용 예쁜 스크롤바 디자인 */
+        .book-body::-webkit-scrollbar { width: 4px; }
+        .book-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.03); }
+        .book-body::-webkit-scrollbar-thumb { background: rgba(35, 59, 153, 0.2); border-radius: 10px; }
+
+        /* 기승전결 문단 연출 */
+        .story-chapter {
+            margin-bottom: 40px;
+        }
+
+        .chapter-title {
+            font-family: 'Pretendard', sans-serif;
             font-size: 13px;
             font-weight: 700;
             color: #233B99;
-            background: rgba(35, 59, 153, 0.1);
-            padding: 4px 8px;
-            border-radius: 6px;
-            width: fit-content;
             text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .chapter-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, rgba(35, 59, 153, 0.15), transparent);
         }
 
-        .timeline-content {
-            font-size: 14px;
-            color: #444;
-            line-height: 1.7;
-            word-break: keep-all;
-            padding-left: 10px;
-            border-left: 2px solid rgba(35, 59, 153, 0.2);
+        .story-text {
+            text-align: justify;
+            margin: 0;
+            text-indent: 10px; /* 앞글자 들여쓰기로 소설 느낌 극대화 */
         }
 
         .close-btn {
             position: absolute;
-            top: 20px; right: 20px;
+            top: 25px; right: 25px;
             background: none; border: none;
-            font-size: 24px; color: #666;
+            font-size: 28px; color: #888;
             cursor: pointer;
             transition: color 0.2s;
         }
         .close-btn:hover { color: #000; }
         
+        /* ❄️ 눈 효과 */
         #snow-background {
             position: fixed;
             top: 0; left: 0;
@@ -336,108 +385,132 @@
 
     <div id="snow-background"></div>
 
+    <!-- 🤍 중앙 프로필 보드 -->
     <div class="profile-board">
 
+        <!-- [1, 2] 상단 타이핑 텍스트 -->
         <div class="top-text">
             <h1>Judas & Iris</h1>
-            <i><p>"얼어붙은 바다에 가라앉은 유일한 온기"</p></i>
+            <p>"얼어붙은 바다에 가라앉은 유일한 온기"</p>
         </div>
 
+        <!-- [3] 첫 번째 선 나옴 -->
         <div class="divider"></div>
 
+        <!-- [4] 이미지 및 프로필 창 쭉 배치 -->
         <div class="profile-section">
             
+            <!-- 👥 주다스 프로필 -->
             <div class="profile-card-set">
                 <div class="side-card left">
                     <img src="image/J26.jpeg" alt="J" class="card-img">
                 </div>
                 <div class="profile-desc-box left">
-                    <strong>Judas Day Wiseman</strong><i>"I love you, so please melt down."</i>
-                    <strong>Gender</strong>M<br>
-                    <strong>Age</strong>26<br>
-                    <strong>Ability</strong>Burst Switch[S]<br>
-                    <strong>Hair/Eyes</strong>Black/Blue<br>
+                    <div class="char-header">
+                        <strong>Judas Day Wiseman</strong>
+                        <i>"I love you, so please melt down."</i>
+                    </div>
+                    <div><strong>Gender</strong></div><div>M</div>
+                    <div><strong>Age</strong></div><div>26</div>
+                    <div><strong>Ability</strong></div><div>Burst Switch[S]</div>
+                    <div><strong>Hair/Eyes</strong></div><div>Black/Blue</div>
                 </div>
             </div>
 
+            <!-- 👥 아이리스 프로필 -->
             <div class="profile-card-set">
                 <div class="side-card right">
                     <img src="image/Rie.jpeg" alt="Rie" class="card-img">
                 </div>
                 <div class="profile-desc-box right">
-                    <strong>Iris Aether</strong><i>"I won't disappear. Promise."</i>
-                    <strong>Gender</strong>F<br>
-                    <strong>Age</strong>24<br>
-                    <strong>Ability</strong>Purification[S]<br>
-                    <strong>Hair/Eyes</strong>Silver/Gold<br>
+                    <div class="char-header">
+                        <strong>Iris Aether</strong>
+                        <i>"I won't disappear. Promise."</i>
+                    </div>
+                    <div><strong>Gender</strong></div><div>F</div>
+                    <div><strong>Age</strong></div><div>24</div>
+                    <div><strong>Ability</strong></div><div>Purification[S]</div>
+                    <div><strong>Hair/Eyes</strong></div><div>Silver/Gold</div>
                 </div>
             </div>
 
+        </div> <!-- profile-section 끝 -->
+
+        <!-- [5] 그 아래 또 선 나옴 -->
+        <div class="divider-bottom"></div>
+
+        <!-- [6] 두 사람의 서사 이야기 진입 버튼 -->
+        <div class="story-trigger-container">
+            <button class="story-btn" onclick="openStoryModal()">서사록: 얼어붙은 세계의 단편 읽기</button>
         </div>
 
-    </div>
+    </div> <!-- profile-board 끝 -->
     
-    <div class="modal-overlay" id="logbookModal" onclick="closeLogbook(event)">
-        <div class="logbook-box">
-            <button class="close-btn" onclick="document.getElementById('logbookModal').classList.remove('active')">&times;</button>
+
+    <!-- 🎬 [6-팝업] 두 사람의 공통 기승전결 서사 팝업창 (소설 뷰어 스타일) -->
+    <div class="modal-overlay" id="storyModal" onclick="closeStoryModal(event)">
+        <div class="story-book-box">
+            <button class="close-btn" onclick="document.getElementById('storyModal').classList.remove('active')">&times;</button>
             
-            <div class="logbook-title" id="modalTitle">LOGBOOK</div>
-            
-            <div class="timeline-section">
-                <div class="timeline-node">
-                    <div class="timeline-tag">Past</div>
-                    <div class="timeline-content" id="modalPast">과거 이야기 내용이 들어갑니다.</div>
-                </div>
-                <div class="timeline-node">
-                    <div class="timeline-content" style="grid-column: 2; border-left: 2px dashed rgba(35, 59, 153, 0.2); height: 20px; margin: -10px 0;"></div>
-                    <div class="timeline-tag">Present</div>
-                    <div class="timeline-content" id="modalPresent">현재 이야기 내용이 들어갑니다.</div>
-                </div>
-                <div class="timeline-node">
-                    <div class="timeline-content" style="grid-column: 2; border-left: 2px dashed rgba(35, 59, 153, 0.2); height: 20px; margin: -10px 0;"></div>
-                    <div class="timeline-tag">Future</div>
-                    <div class="timeline-content" id="modalFuture">미래 혹은 운명 이야기 내용이 들어갑니다.</div>
-                </div>
+            <div class="book-header">
+                <h2>氷點 : 두 사람의 연대기</h2>
+                <p>가장 가혹한 바다에서 시작된 하나의 온기</p>
             </div>
+            
+            <!-- 소설 서사 본문 영역 (기승전결) -->
+            <div class="book-body">
+                
+                <!-- 기 (起) : 만남 -->
+                <div class="story-chapter">
+                    <div class="chapter-title">Chapter 1. 起 (만남)</div>
+                    <p class="story-text">
+                        모든 생명도, 흐르던 시간도 하얗게 얼어붙어 침묵하는 심해. 그 지독한 빙점의 바다에서 나고 자란 주다스에게 한기(寒氣)는 지극히 당연한 순리이자 세계의 전부였다. 그러나 그 가혹한 심연의 한가운데로, 결코 존재해서는 안 될 찬란하고 이질적인 불꽃 하나가 굴러떨어졌다. 위에서 아래로 가라앉은 은빛의 영혼, 아이리스였다. 주다스는 자신의 세계를 침범한 작은 온기를 밀어내려 했으나, 그녀가 내뿜는 빛은 얼어붙은 바다를 부드럽게 투과하며 그의 시선을 옭아맸다. 그것이 두 운명이 처음으로 교차한 순간이었다.
+                    </p>
+                </div>
+
+                <!-- 승 (承) : 변화 -->
+                <div class="story-chapter">
+                    <div class="chapter-title">Chapter 2. 承 (변화)</div>
+                    <p class="story-text">
+                        닿는 모든 것을 얼려버리는 무자비한 심해 속이었지만, 이상하게도 아이리스의 불꽃은 꺼지지 않았다. 오히려 주다스의 얼어붙은 심장 부근이 그녀의 온기에 노출될 때마다 낯설고 기이하게 요동치기 시작했다. 주다스는 난생처음 느끼는 이 감각이 두려우면서도 짐짓 모른 채 그녀를 묵묵히 호위했고, 아이리스 역시 자신을 집어삼키지 않고 거리를 둔 채 지켜봐 주는 그의 차가운 시선 속에서 역설적이게도 가장 안전한 구원을 맛보았다. 두 사람은 서로의 결핍을 그렇게 조용히 채워가고 있었다.
+                    </p>
+                </div>
+
+                <!-- 전 (轉) : 갈등 -->
+                <div class="story-chapter">
+                    <div class="chapter-title">Chapter 3. 轉 (갈등)</div>
+                    <p class="story-text">
+                        하지만 세계의 법칙은 잔혹했다. 정반대의 속성을 지닌 두 존재의 결합은 필연적으로 붕괴를 예고했다. 아이리스의 정화 능력이 강해질수록 주다스를 지탱하던 견고한 얼음의 세계가 녹아내려 균열이 가기 시작했고, 반대로 주다스의 한기가 거세질 때마다 아이리스의 불꽃은 위태롭게 흔들렸다. 서로에게 다가설수록 상대방을 파멸로 몰고 간다는 모순적인 진실 앞에 두 사람은 직면했다. "내가 사라지게 둘 순 없어," 그리고 "너를 녹여내서라도 곁에 있겠어." 엇갈리는 대사 속에 숨겨진 진심은 오직 하나, 서로를 잃고 싶지 않다는 절박함뿐이었다.
+                    </p>
+                </div>
+
+                <!-- 결 (結) : 운명 -->
+                <div class="story-chapter">
+                    <div class="chapter-title">Chapter 4. 結 (운명)</div>
+                    <p class="story-text">
+                        결국 그들이 도달한 종착지는 파멸이 아닌 기꺼이 감내할 공동의 운명이었다. 주다스는 그녀를 품음으로써 자신의 얼어붙은 세계가 흔적도 없이 녹아내린다 해도, 그 심연의 끝에서 기꺼이 가라앉기를 선택하기로 했다. 아이리스 역시 지독한 눈보라와 냉소 속에서도 절대 사라지지 않겠노라, 그의 얼어붙은 영혼을 온전히 녹여내겠노라 맹세했다. 빙점(氷點)의 바다, 그 가장 차가운 곳에서 피어난 가장 뜨거운 온기는 그렇게 영원히 꺼지지 않을 하나의 서사로 완성되었다.
+                    </p>
+                </div>
+
+            </div> <!-- book-body 끝 -->
         </div>
     </div>
-    
+
 
     <script>
-
-        const narrativeData = {
-            judas: {
-                title: "Record 0x26 : 주다스(Judas)의 일지",
-                past: "칠흑 같은 한기만이 가득했던 얼어붙은 바다, 그 심연 속에서 태어난 그는 본래 온기라는 감정을 알지 못했다. 세상의 모든 생명이 얼어붙는 것이 그에게는 당연한 순리였다.",
-                present: "우연히 바다 깊은 곳으로 가라앉은 유일한 불꽃, 아이리스를 마주한 후 그의 세계에 균열이 가기 시작했다. 얼어붙은 심장이 그녀의 온기 주변에서만 약하게 요동치는 기이한 감각을 겪는 중이다.",
-                future: "그 온기를 온전히 품게 되는 날, 그를 이루고 있던 얼음의 세계는 완전히 녹아내려 파멸할지도 모른다. 그럼에도 그는 기꺼이 심연 속으로 더 깊이 침잠하기를 선택할 운명이다."
-            },
-            iris: {
-                title: "Record 0x11 : 아이리스(Iris)의 일지",
-                past: "끝없는 눈보라 속에서 홀로 타오르던 작은 불꽃. 주변의 모든 것을 따스하게 감싸고 싶었으나, 가혹한 빙점의 세계는 그녀의 빛을 허락하지 않고 끝내 깊은 바다 밑으로 가라앉혔다.",
-                present: "그 혹독한 바다의 주인인 주다스를 만났다. 모든 것을 얼려버리는 무자비한 얼음 속에서, 오직 자신만을 얼리지 않고 묵묵히 바라보는 그의 시선에서 기묘한 구원을 느끼고 있다.",
-                future: "차가운 심해 속에서 그녀의 온기가 언제까지 버틸 수 있을지는 알 수 없다. 하지만 그녀는 확신한다. 자신이 완전히 꺼지기 전까지, 그의 얼어붙은 세계를 반드시 녹여내리라는 것을."
-            }
-        };
-
-        function openLogbook(character) {
-            const data = narrativeData[character];
-            if(!data) return;
-
-            document.getElementById("modalTitle").innerText = data.title;
-            document.getElementById("modalPast").innerText = data.past;
-            document.getElementById("modalPresent").innerText = data.present;
-            document.getElementById("modalFuture").innerText = data.future;
-
-            document.getElementById("logbookModal").classList.add("active");
+        // 팝업창 열기 함수
+        function openStoryModal() {
+            document.getElementById("storyModal").classList.add("active");
         }
 
-        function closeLogbook(e) {
-            if(e.target.id === "logbookModal") {
-                document.getElementById("logbookModal").classList.remove('active');
+        // 팝업창 바깥 어두운 배경 클릭 시 닫기 함수
+        function closeStoryModal(e) {
+            if(e.target.id === "storyModal") {
+                document.getElementById("storyModal").classList.remove('active');
             }
         }
         
+        // ❄️ 눈 생성 로직 (기존 유지)
         function createSnow() {
             const snowContainer = document.getElementById("snow-background");
             const snow = document.createElement("div");
