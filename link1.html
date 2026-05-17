@@ -42,7 +42,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 30px;
             padding: 40px 50px;
-            width: 780px;
+            width: 820px;
             max-height: 95vh;
             box-sizing: border-box;
             overflow-y: auto;
@@ -209,7 +209,7 @@
             transition: all 0.5s ease;
 
             display: grid;
-            grid-template-columns: 65px 1fr;
+            grid-template-columns: 75px 1fr;
             text-align: left;
             row-gap: 6px;
         }
@@ -449,8 +449,9 @@
                     <div><strong>Gender</strong></div><div class="gender">M</div>
                     <div><strong>Age</strong></div><div class="age">26</div>
                     <div><strong>Height</strong></div><div class="height">182</div>
-                    <div><strong>Ability</strong></div><div class="ability-val">Burst Switch[S]</div>
                     <div><strong>Birth</strong></div><div class="birth">10/21</div>
+                    <div><strong>Ability</strong></div><div class="ability-val">Burst Switch[S]</div>
+                    <div><strong>Department</strong></div><div class="department">Dracal</div>
                 </div>
             </div>
 
@@ -466,8 +467,9 @@
                     <div><strong>Gender</strong></div><div class="gender">F</div>
                     <div><strong>Age</strong></div><div class="age">24</div>
                     <div><strong>Height</strong></div><div class="height">164</div>
-                    <div><strong>Ability</strong></div><div class="ability-val">Purification[S]</div>
                     <div><strong>Birth</strong></div><div class="birth">04/28</div>
+                    <div><strong>Ability</strong></div><div class="ability-val">Purification[S]</div>
+                    <div><strong id="RiskId">Risk</strong></div><div id="RiskSub" class="risk">Presence rate↓, Immunity↓</div>
                 </div>
             </div>
 
@@ -507,15 +509,17 @@
                 judas: {
                     img: "image/J26.jpeg",
                     quote: '"I love you, so please melt down."',
-                    ability: "Burst Switch[S]"
+                    department: "Dracal"
                 },
                 iris: {
                     img: "image/Rie.jpeg",
                     name: "Iris Aether",
                     quote: '"I won\'t disappear. Promise."',
                     age: "24",
+                    birth: "04/28",
                     ability: "Purification[S]",
-                    birth: "04/28"
+                    riskname: "Risk",
+                    risksub: "Presence rate↓, Immunity↓"
                 },
                 story: {
                     title: "氷點 : 두 사람의 이야기",
@@ -536,15 +540,17 @@
                 judas: {
                     img: "image/Judas.png",
                     quote: '"O Deus meus, fac me quaeso tuum."',
-                    ability: "Burst Switch[S]"
+                    department: "Villain"
                 },
                 iris: {
                     img: "image/Aurora.jpeg",
                     name: "Aurora",
                     quote: '"God is dead. Now I\'m your only god."',
+                    birth: "12/25",
                     age: "24?",
                     ability: "氷結[A]",
-                    birth: "12/25"
+                    riskname: "Feature",
+                    risksub: "Returned from the dead"
                 },
                 story: {
                     title: "氷點 : IF의 세계선",
@@ -591,10 +597,12 @@
 
             document.getElementById('imgIris').src = data.iris.img;
             document.getElementById('profileIris').querySelector('.name').innerText = data.iris.name;
-            document.getElementById('profileIris').querySelector('.age').innerText = data.iris.age;
             document.getElementById('profileIris').querySelector('.quote').innerText = data.iris.quote;
-            document.getElementById('profileIris').querySelector('.ability-val').innerText = data.iris.ability;
+            document.getElementById('profileIris').querySelector('.age').innerText = data.iris.age;
             document.getElementById('profileIris').querySelector('.birth').innerText = data.iris.birth;
+            document.getElementById('profileIris').querySelector('.ability-val').innerText = data.iris.ability;
+            document.getElementById('RiskId').innerText = data.iris.riskname;
+            document.getElementById('RiskSub').innerText = data.iris.risksub;
         }
 
         function openStoryModal() {
