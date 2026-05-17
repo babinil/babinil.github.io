@@ -17,10 +17,9 @@
             font-family: 'Nanum Myeongjo', serif;
             overflow: hidden;
             color: white;
-            transition: background 1s ease-in-out; /* 배경 변경 시 부드럽게 */
+            transition: background 1s ease-in-out;
         }
 
-        /* [4번 노이즈 질감] */
         body::after {
             content: "";
             position: fixed;
@@ -32,7 +31,6 @@
             z-index: 100;
         }
 
-        /* 사이드 화살표 버튼 */
         .side-btn {
             position: fixed;
             top: 50%;
@@ -55,7 +53,6 @@
         .prev-side { left: 30px; }
         .next-side { right: 30px; }
 
-        /* 중앙 원형 카드 */
         #main-link {
             text-decoration: none;
             color: white;
@@ -83,7 +80,6 @@
             background: rgba(255, 255, 255, 0.12);
         }
 
-        /* 눈송이 */
         .snow {
             position: fixed;
             top: -10px;
@@ -95,19 +91,17 @@
 
         @keyframes fall { to { transform: translate(100px, 100vh); } }
 
-        /* 화면 폭이 768px 이하일 때 (보통 태블릿 ~ 모바일) */
         @media (max-width: 768px) {
             .circle-content {
-                /* 모바일 화면 너비의 80% 정도를 차지하게 설정 */
                 width: 60vw; 
-                height: 60vw; /* 가로 세로를 똑같이 vw로 주면 항상 정원형이 됩니다 */
-                max-width: 300px; /* 너무 커지지 않게 한계치 설정 */
+                height: 60vw;
+                max-width: 300px;
                 max-height: 300px;
                 margin-bottom: 100px;
             }
         
             h1 {
-                font-size: 22px; /* 글자 크기도 모바일에 맞게 살짝 줄임 */
+                font-size: 22px;
             }
         
             p {
@@ -116,7 +110,7 @@
             }
             
             .side-btn {
-                font-size: 40px; /* 화살표 크기 조정 */
+                font-size: 40px;
                 padding: 10px;
             }
         
@@ -125,11 +119,9 @@
 </head>
 <body id="bg-body">
 
-    <!-- 사이드 화살표 -->
     <button class="side-btn prev-side" onclick="changePage(-1)">❮</button>
     <button class="side-btn next-side" onclick="changePage(1)">❯</button>
 
-    <!-- 중앙 카드 -->
     <a href="link1.html" id="main-link">
         <div class="circle-content">
             <h1 id="title"> </h1>
@@ -139,8 +131,7 @@
     </a>
 
     <script>
-        
-        // 페이지 데이터 설정 (이미지 주소, 제목, 문구, 링크)
+
         const pages = [
             {
                 bg: "radial-gradient(circle at center, #233B99FF 0%, #f0f9ff 100%)",
@@ -164,9 +155,8 @@
 
         let currentPage = 0;
 
-        // 날짜 계산 전달
         function calculateDays(dateString) {
-            if (!dateString) return ""; // 날짜 정보가 없으면 빈 칸 반환
+            if (!dateString) return "";
             const start = new Date(dateString);
             const today = new Date();
             const diff = today - start;
@@ -182,7 +172,6 @@
 
             const data = pages[currentPage];
             
-            // 데이터 교체
             document.getElementById('bg-body').style.background = data.bg;
             document.getElementById('title').innerText = data.title;
             document.getElementById('startDate').innerText = calculateDays(data.startDate);
@@ -190,7 +179,6 @@
             
         }
 
-        // 눈 생성 로직 (동일)
         function createSnow() {
             const snow = document.createElement("div");
             snow.className = "snow";
@@ -203,8 +191,7 @@
             setTimeout(() => snow.remove(), 7000);
         }
         setInterval(createSnow, 150);
-        
-        // 초기 배경 설정
+
         document.getElementById('bg-body').style.background = pages[0].bg;
         changePage(0);
     </script>
