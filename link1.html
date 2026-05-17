@@ -102,10 +102,13 @@
         /* --- ➖ 4. 가로 줄 애니메이션 --- */
         .divider {
             display: block;
+            position: relative;
+            clear: both;
+            flex-shrink: 0;
             width: 0px;
             height: 1px;
-            background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.2), transparent);
-            margin: 25px 0 40px 0; 
+            background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.3), transparent);
+            margin: 30px auto; 
             /* [단계 4] p 태그 타이핑이 끝나는 3.2초 시점에 가로선이 쫙 펼쳐짐 */
             animation: expandWidth 0.8s ease forwards;
             animation-delay: 3.2s; 
