@@ -466,7 +466,7 @@
                     <div><strong>Gender</strong></div><div class="gender">F</div>
                     <div><strong>Age</strong></div><div class="age">24</div>
                     <div><strong>Height</strong></div><div class="height">164</div>
-                    <div><strong>Ability</strong></div><div class="ability-val">Purification[S]</div> <!-- 클래스 추가 -->
+                    <div><strong>Ability</strong></div><div class="ability-val">Purification[S]</div>
                     <div><strong>Birth</strong></div><div class="birth">04/28</div>
                 </div>
             </div>
@@ -501,6 +501,7 @@
         const contentData = {
             original: {
                 btnText: "ROUTE : ORIGINAL",
+                mainTitle: "Judas & Iris",
                 subTitle: '"얼어붙은 바다에 가라앉은 유일한 온기"',
                 tags: ["#동거", "#감독관", "#피감독인", "#구원", "#소멸"],
                 judas: {
@@ -510,8 +511,11 @@
                 },
                 iris: {
                     img: "image/Rie.jpeg",
+                    name: "Iris",
                     quote: '"I won\'t disappear. Promise."',
-                    ability: "Purification[S]"
+                    age: "24",
+                    ability: "Purification[S]",
+                    birth: "04/28"
                 },
                 story: {
                     title: "氷點 : 두 사람의 이야기",
@@ -526,6 +530,7 @@
             },
             ifMode: {
                 btnText: "ROUTE : IF",
+                mainTitle: "Judas & Aurora",
                 subTitle: '"얼어붙은 구원과 망가진 신앙"',
                 tags: ["#대립", "#IF", "#망령", "#구원", "#파멸"],
                 judas: {
@@ -535,8 +540,11 @@
                 },
                 iris: {
                     img: "image/Aurora.jpeg",
+                    name: "Aurora",
                     quote: '"God is dead. Now I\'m your only god."',
-                    ability: "氷結[A]"
+                    age: "24?",
+                    ability: "氷結[A]",
+                    birth: "12/25"
                 },
                 story: {
                     title: "氷點 : IF의 세계선",
@@ -565,6 +573,7 @@
             }
 
             document.querySelector('.if-toggle-btn').innerText = data.btnText;
+            document.getElementById('mainTitle').innerText = data.mainTitle;
             document.getElementById('mainSub').innerText = data.subTitle;
 
             const tagContainer = document.getElementById('tagContainer');
@@ -581,8 +590,11 @@
             document.getElementById('profileJudas').querySelector('.ability-val').innerText = data.judas.ability;
 
             document.getElementById('imgIris').src = data.iris.img;
+            document.getElementById('profileIris').querySelector('.name').innerText = data.iris.name;
+            document.getElementById('profileIris').querySelector('.age').innerText = data.iris.age;
             document.getElementById('profileIris').querySelector('.quote').innerText = data.iris.quote;
             document.getElementById('profileIris').querySelector('.ability-val').innerText = data.iris.ability;
+            document.getElementById('profileIris').querySelector('.birth').innerText = data.iris.birth;
         }
 
         function openStoryModal() {
