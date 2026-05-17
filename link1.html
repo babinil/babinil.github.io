@@ -58,7 +58,7 @@
             scrollbar-width: none;
         }
 
-        /* --- ✍️ 2 & 3. 상단 텍스트 타이핑 애니메이션 --- */
+        /* --- ✍️ 2 & 3. 상단 텍스트 타이핑 애니메이션 복구 --- */
         .top-text {
             text-align: center;
             color: #1a1a1a;
@@ -69,12 +69,13 @@
         }
 
         .top-text h1 { 
-            font-size: 30px; 
+            font-size: 30px; /* 줄이신 폰트 크기 유지 */
             margin: 0 0 12px 0;
             white-space: nowrap;
-            opacity: 0;
-            animation: fadeInSimple 1s ease forwards;
-            animation-delay: 0.8s;
+            overflow: hidden; /* 👈 타이핑을 위해 필수 */
+            width: 0;         /* 👈 시작할 때 글자를 숨김 */
+            animation: typing 1s steps(12) forwards;
+            animation-delay: 0.8s; /* 유리창이 뜨고 난 뒤 시작 */
         }
 
         .top-text p { 
@@ -83,21 +84,18 @@
             color: #444;
             margin: 0;
             white-space: nowrap;
-            opacity: 0;
-            animation: fadeInSimple 1s ease forwards;
-            animation-delay: 1.8s;
+            overflow: hidden; /* 👈 타이핑을 위해 필수 */
+            width: 0;         /* 👈 시작할 때 글자를 숨김 */
+            animation: typing 1.5s steps(22) forwards;
+            animation-delay: 1.8s; /* h1 타이핑이 끝난 뒤 시작 */
         }
 
-        @keyframes fadeInSimple {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-
+        /* 타이핑 핵심 애니메이션 효과 */
         @keyframes typing {
             from { width: 0; }
             to { width: 100%; }
         }
+        
 
         /* --- ➖ 4. 가로 줄 애니메이션 --- */
         .divider {
@@ -106,7 +104,7 @@
             background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.2), transparent);
             margin: 15px 0 40px 0; /* 위아래 간격 확보 */
             animation: expandWidth 1s ease forwards;
-            animation-delay: 3.5s;
+            animation-delay: 3.5s; /* 글자 타이핑이 완벽히 끝난 후 재생 */
         }
 
         @keyframes expandWidth {
@@ -252,7 +250,7 @@
                 <div class="side-card left">
                     <img src="image/J26.jpeg" alt="J" class="card-img">
                 </div>
-                <!-- 6. 왼쪽 설명 프로필창 (여기에 원하는 텍스트를 적으세요!) -->
+                <!-- 6. 왼쪽 설명 프로필창 -->
                 <div class="profile-desc-box left">
                     <strong>주다스 (Judas)</strong><br>
                     여기에 캐릭터의 소개나 프로필 텍스트를 자유롭게 채워 넣으실 수 있습니다.
@@ -265,7 +263,7 @@
                 <div class="side-card right">
                     <img src="image/Rie.jpeg" alt="Rie" class="card-img">
                 </div>
-                <!-- 7. 오른쪽 설명 프로필창 (여기에 원하는 텍스트를 적으세요!) -->
+                <!-- 7. 오른쪽 설명 프로필창 -->
                 <div class="profile-desc-box right">
                     <strong>아이리스 (Iris)</strong><br>
                     여기에 리에(아이리스)의 프로필이나 소개 문구를 채워 넣으실 수 있습니다.
