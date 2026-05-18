@@ -17,7 +17,6 @@
             padding: 0;
             min-height: 100vh;
             background-color: #fcf8f2;
-            /* 아기자기한 격자 배경 */
             background-image: 
                 linear-gradient(#f1eee9 1px, transparent 1px),
                 linear-gradient(90deg, #f1eee9 1px, transparent 1px);
@@ -33,10 +32,8 @@
             position: relative;
             width: 1100px;
             height: 750px;
-            /* border: 1px solid red;  위치 잡을 때 켜보세요 */
         }
 
-        /* 1번 영역: 사이트명 및 주의사항 메모지 */
         .main-memo {
             position: absolute;
             top: 150px;
@@ -67,7 +64,6 @@
             word-break: keep-all;
         }
 
-        /* 폴라로이드 공통 스타일 */
         .polaroid {
             position: absolute;
             background: white;
@@ -102,7 +98,6 @@
             z-index: 100;
         }
 
-        /* 마스킹 테이프 */
         .tape {
             position: absolute;
             top: -15px;
@@ -114,14 +109,12 @@
             backdrop-filter: blur(1px);
         }
 
-        /* 시안 위치 기반 배치 (2번~6번) */
         .p2 { top: 30px; left: 100px; transform: rotate(-8deg); }
         .p3 { top: 50px; left: 500px; transform: rotate(5deg); }
         .p4 { top: 250px; left: 550px; transform: rotate(-3deg); }
         .p5 { top: 480px; left: 600px; transform: rotate(6deg); }
         .p6 { bottom: 30px; left: 200px; transform: rotate(-4deg); }
 
-        /* 배경 장식 (스티커 느낌) */
         .sticker {
             position: absolute;
             font-size: 2rem;
@@ -189,7 +182,6 @@
     </div>
 
     <script>
-        // D-Day 계산기
         function updateDDays() {
             const polaroids = document.querySelectorAll('.polaroid');
             const today = new Date();
