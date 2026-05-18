@@ -15,7 +15,48 @@
             --iris-yellow: #eead2d;
             --tape-blue: rgba(61, 90, 128, 0.2);
             --tape-yellow: rgba(238, 173, 45, 0.2);
+
+            --transition-speed: 0.5s;
         }
+
+        body.dark-theme {
+            --outer-bg: #2c3e50;
+            --paper-color: #f0f0f0;
+            --text-main: #ffffff;
+        }
+
+        body, .diary-wrapper, .page-left, .page-right {
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        .index-style {
+            position: absolute;
+            right: -40px;
+            top: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 5;
+        }
+
+        .tab {
+            width: 60px;
+            height: 40px;
+            background: #3d5a80;
+            color: white;
+            writing-mode: vertical-rl;
+            text-align: center;
+            padding: 10px 5px;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            box-shadow: 2px 2px 5px rgba(0,0,0,01);
+        }
+
+        .tab:hover { transform: translateX(5px); }
+        .tab.theme-blue { background: #3d5a80; }
+        .tab.theme-dark { background: #1a1a1a; }
 
         body {
             margin: 0; padding: 0;
@@ -258,6 +299,12 @@
 
     <div class="diary-container">
         <div class="diary-wrapper">
+
+            <div class="index-tabs">
+                <div class="tab theme-blue" onclick="changeTheme('default')">Light</div>
+                <div class="tab theme-dark" onclick="changeTheme('dark')">Night</div>
+            </div>
+            
             <div class="page-left">
                 <div class="sticker" style="top: 20px; left: 30px;">❄️</div>
                 <div class="sticker" style="bottom: 50px; right: 40px; transform: rotate(15deg);">✨</div>
@@ -415,6 +462,14 @@
         window.closeModal = function() {
             closeViewer();
             document.getElementById('modal').style.display = 'none';
+        }
+
+        function changeTheme(mode) {
+            if (mode === 'dark') {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
         }
 
         const storyData = {
