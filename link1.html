@@ -404,6 +404,7 @@
 
         function showChapter(title, content) {
             document.getElementById('viewer-title').innerText = title;
+            const cleanContent = content.split('\n').map(line => line.trim()).join('\n');
             document.getElementById('viewer-content').innerHTML = content;
             document.getElementById('story-viewer').style.display = 'flex';
         }
