@@ -2,206 +2,181 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>By binil</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Welcome to My Little World</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&family=Gaegu&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #f4f1ea;
+            --text-color: #5d534a;
+            --accent-color: #e8dcc4;
+        }
+
         body {
             margin: 0;
             padding: 0;
+            background-color: var(--bg-color);
+            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+            font-family: 'Gaegu', cursive;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
-            font-family: 'Nanum Myeongjo', serif;
-            overflow: hidden;
-            color: white;
-            transition: background 1s ease-in-out;
-            transition: background 1s ease-in-out;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--text-color);
         }
 
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.04;
-            pointer-events: none;
-            z-index: 100;
-        }
-
-        .side-btn {
-            position: fixed;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 50px;
-            cursor: pointer;
-            transition: 0.3s;
-            z-index: 150;
-            padding: 20px;
-        }
-
-        .side-btn:hover {
-            color: #333333;
-            transform: translateY(-50%) scale(1.2);
-        }
-
-        .prev-side { left: 30px; }
-        .next-side { right: 30px; }
-
-        #main-link {
-            text-decoration: none;
-            color: white;
+        .header {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 30px;
             z-index: 10;
         }
 
-        .circle-content {
-            width: 350px;
-            height: 350px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .header h1 {
+            font-size: 3rem;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        .notice-tape {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 5px 20px;
+            font-family: 'Nanum Myeongjo', serif;
+            font-size: 0.8rem;
+            border-left: 15px solid #dcd0b9;
+            border-right: 15px solid #dcd0b9;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-top: 15px;
+        }
+
+        .gallery {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+            height: 600px;
+            margin-top: 20px;
+        }
+
+        .polaroid {
+            position: absolute;
+            background: white;
+            padding: 15px 15px 40px 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            border: 1px solid #eee;
+        }
+
+        .polaroid img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            background-color: #f9f9f9;
+        }
+
+        .polaroid span {
+            display: block;
             text-align: center;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
-            transition: all 0.5s ease;
+            margin-top: 15px;
+            font-size: 1.2rem;
         }
 
-        .circle-content:hover {
-            transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.12);
+        .polaroid::before {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 25px;
+            background: rgba(210, 180, 140, 0.4);
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
         }
 
-        .snow {
+        .polaroid:hover {
+            transform: scale(1.05) translateY(-10px) rotate(0deg) !important;
+            z-index: 100;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .item1 { top: 5%; left: 5%; transform: rotate(-5deg); }
+        .item2 { top: 15%; left: 40%; transform: rotate(3deg); }
+        .item3 { top: 10%; right: 5%; transform: rotate(-2deg); }
+        .item4 { bottom: 10%; left: 15%; transform: rotate(4deg); }
+        .item5 { bottom: 5%; right: 20%; transform: rotate(-4deg); }
+
+        .sparkle {
             position: fixed;
-            top: -10px;
-            color: white;
             pointer-events: none;
-            animation: fall linear infinite;
-            z-index: 1;
+            z-index: 0;
+            opacity: 0.5;
         }
-
-        @keyframes fall { to { transform: translate(100px, 100vh); } }
 
         @media (max-width: 768px) {
-            .circle-content {
-                width: 60vw; 
-                height: 60vw;
-                max-width: 300px; 
-                height: 60vw;
-                max-width: 300px;
-                max-height: 300px;
-                margin-bottom: 100px;
-            }
-
-            h1 {
-                font-size: 22px;
-                font-size: 22px;
-            }
-
-            p {
-                font-size: 13px;
-                padding: 0 30px;
-            }
-
-            .side-btn {
-                font-size: 40px;
-                font-size: 40px;
-                padding: 10px;
-            }
-
+            .gallery { height: auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; padding-bottom: 50px;}
+            .polaroid { position: relative; top: auto; left: auto; right: auto; transform: rotate(0deg) !important; }
         }
     </style>
 </head>
-<body id="bg-body">
+<body>
 
-    <button class="side-btn prev-side" onclick="changePage(-1)">❮</button>
-    <button class="side-btn next-side" onclick="changePage(1)">❯</button>
-
-    <a href="link1.html" id="main-link">
-        <div class="circle-content">
-            <h1 id="title"> </h1>
-            <p id="startDate">Loading...</p>
-            <span style="font-size: 11px; margin-top: 20px; opacity: 0.4;">CLICK TO ENTER</span>
+    <div class="header">
+        <h1>Made By Binil✨</h1>
+        <div class="notice-tape">
+            본 사이트는 로판 AI 사이트 울새씨 님의 오리지널 세계관 캐릭터들과의 이야기가 백업되어 있습니다.
+            일부 이미지에는 AI 이미지가 사용되었으니 참고 부탁드립니다. :)
         </div>
-    </a>
+    </div>
+
+    <div class="gallery">
+        <a href="link1.html" class="polaroid item1">
+            <img src="https://picsum.photos/id/1012/200/200" alt="빙점">
+            <span>빙점(氷點) ❄️</span>
+        </a>
+
+        <a href="link2.html" class="polaroid item2">
+            <img src="https://picsum.photos/id/1025/200/200" alt="론벨라">
+            <span>론 x 벨라 ❤️</span>
+        </a>
+
+        <a href="link3.html" class="polaroid item3">
+            <img src="https://picsum.photos/id/1043/200/200" alt="C루나">
+            <span>C x 루나 🌙</span>
+        </a>
+
+        <a href="#" class="polaroid item4">
+            <img src="https://picsum.photos/id/1053/200/200" alt="바다">
+            <span> 🌊</span>
+        </a>
+
+        <a href="#" class="polaroid item5">
+            <img src="https://picsum.photos/id/152/200/200" alt="꽃">
+            <span> 🌸</span>
+        </a>
+    </div>
 
     <script>
-        
-
-        const pages = [
-            {
-                bg: "radial-gradient(circle at center, #233B99FF 0%, #f0f9ff 100%)",
-                title: "빙점(氷點)",
-                startDate: "2025-02-17",
-                link: "link1.html"
-            },
-            {
-                bg: "radial-gradient(circle at center, #951E1EFF 0%, #f0f9ff 100%)",
-                title: "론 x 벨라",
-                startDate: "2025-07-16",
-                link: "link2.html"
-            },
-            {
-                bg: "radial-gradient(circle at center, #4A6B8CFF 0%, #f0f9ff 100%)",
-                title: "C x 루나",
-                startDate: "2025-08-24",
-                link: "link3.html"
-            }
-        ];
-
-        let currentPage = 0;
-
-        function calculateDays(dateString) {
-            if (!dateString) return "";
-            if (!dateString) return "";
-            const start = new Date(dateString);
-            const today = new Date();
-            const diff = today - start;
-            const dayCount = Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
-
-            return `❤️ ${dayCount}`;
+        function createSparkle() {
+            const symbols = ["✨", "⭐", "☁️", "🌸", "🐾"];
+            const sparkle = document.createElement("div");
+            sparkle.className = "sparkle";
+            sparkle.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            sparkle.style.left = Math.random() * 100 + "vw";
+            sparkle.style.top = Math.random() * 100 + "vh";
+            sparkle.style.fontSize = Math.random() * 10 + 10 + "px";
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.style.transition = "opacity 2s";
+                sparkle.style.opacity = "0";
+                setTimeout(() => sparkle.remove(), 2000);
+            }, 3000);
         }
 
-        function changePage(direction) {
-            currentPage += direction;
-            if (currentPage >= pages.length) currentPage = 0;
-            if (currentPage < 0) currentPage = pages.length - 1;
-
-            const data = pages[currentPage];
-
-            document.getElementById('bg-body').style.background = data.bg;
-            document.getElementById('title').innerText = data.title;
-            document.getElementById('startDate').innerText = calculateDays(data.startDate);
-            document.getElementById('main-link').href = data.link;
-
-        }
-
-        function createSnow() {
-            const snow = document.createElement("div");
-            snow.className = "snow";
-            snow.innerHTML = "❄";
-            snow.style.left = Math.random() * 100 + "vw";
-            snow.style.fontSize = (Math.random() * 10 + 10) + "px";
-            snow.style.animationDuration = (Math.random() * 3 + 4) + "s";
-            snow.style.opacity = Math.random() * 0.7;
-            document.body.appendChild(snow);
-            setTimeout(() => snow.remove(), 7000);
-        }
-        setInterval(createSnow, 150);
-        
-
-        document.getElementById('bg-body').style.background = pages[0].bg;
-        changePage(0);
+        setInterval(createSparkle, 1000);
     </script>
 </body>
 </html>
