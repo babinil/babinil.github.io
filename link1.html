@@ -143,10 +143,101 @@
             background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center;
             z-index: 100;
         }
+        
         .modal-content {
-            background: #fff; width: 500px; padding: 40px;
-            border-radius: 8px; font-family: serif;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            background: #fdfdfd; 
+            width: 850px; /* 이미지 비율에 맞춰 확장 */
+            max-width: 90vw;
+            padding: 30px;
+            border-radius: 15px;
+            font-family: 'Gaegu', cursive;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            position: relative;
+            background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .archive-title {
+            text-align: center;
+            font-size: 2rem;
+            coor: var(--judas-blue);
+            margin-bottom: 40px;
+        }
+
+        .bookmark-container {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 20px 10px;
+            min-height: 350px;
+        }
+
+        .bookmark {
+            flex: 0 0 120px;
+            height: 300px;
+            background: #fff;
+            border: 1px solid #eee;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 5px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .bookmark:hover {
+            transform: translateY(-15px);
+            box-shadow: 5px 20px 30px rgba(0,0,0,0.1);
+        }
+
+        .bookmark::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            width: 40px;
+            height: 15px;
+            background: rgba(61, 90, 128, 0.2);
+            backdrop-filter: blur(2px);
+        }
+
+        .bm-number { font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; }
+        .bm-title { 
+            writing-mode: vertical-rl;
+            font-size: 1.3rem; 
+            letter-spacing: 2px;
+            text-align: center;
+        }
+        .bm-icon { margin-top: auto; color: #ddd; }
+
+        .bookmark.locked { background: #eef2f7; cursor: default; }
+        .bookmark.locked:hover { transform: none; }
+
+        #story-viewer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff;
+            border-radius: 15px;
+            display: none;
+            flex-direction: column;
+            padding: 40px;
+            box-sizing: border-box;
+            z-index: 110;
+        }
+
+        .close-viewer {
+            position: absolute; top: 20px; right: 20px;
+            cursor: pointer; font-size: 1.5rem;
+        }
+
+        .archive-footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -202,10 +293,50 @@
 
     <div class="modal" id="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 style="font-family: 'Gaegu';">氷點 : Story</h2>
-            <hr>
-            <p style="line-height: 1.8;"> 쓴다. 서사!
-            </p>
+            <span style="position:absolute; right:25px; top:20px; cursor:pointer;" onclick="closeModal()">✕</span>
+            
+            <div class="archive-title">氷點 : Story Archive</div>
+    
+            <div class="bookmark-container">
+                <div class="bookmark locked">
+                    <div class="bm-icon" style="margin-top:80px">🔒</div>
+                    <div class="bm-title" style="color:#aaa">???</div>
+                </div>
+    
+                <div class="bookmark" onclick="showChapter('Chapter 04', '여기에 네 번째 소설 내용을 입력하세요...')">
+                    <div class="bm-number">04</div>
+                    <div class="bm-title">사라지지 않는 것</div>
+                    <div class="bm-icon">❄️</div>
+                </div>
+    
+                <div class="bookmark" onclick="showChapter('Chapter 03', '푸른 기억의 조각들이 흩어집니다...')">
+                    <div class="bm-number">03</div>
+                    <div class="bm-title">Blue Memory</div>
+                    <div class="bm-icon">❄️</div>
+                </div>
+    
+                <div class="bookmark" onclick="showChapter('Chapter 02', '얼어붙은 온기 속에서 우리는...')">
+                    <div class="bm-number">02</div>
+                    <div class="bm-title">얼어붙은 온기</div>
+                    <div class="bm-icon">❄️</div>
+                </div>
+    
+                <div class="bookmark" onclick="showChapter('Chapter 01', '첫 눈이 내리던 그날의 기록입니다...')">
+                    <div class="bm-number">01</div>
+                    <div class="bm-title">First Snow</div>
+                    <div class="bm-icon">❄️</div>
+                </div>
+            </div>
+    
+            <div class="archive-footer">
+                기록되지 않은 기억은, 언젠가 우리를 다시 부를 거야.
+            </div>
+    
+            <div id="story-viewer">
+                <span class="close-viewer" onclick="closeViewer()">← 목록으로</span>
+                <h2 id="viewer-title" style="border-bottom: 1px solid #eee; padding-bottom:10px;"></h2>
+                <div id="viewer-content" style="line-height:2; overflow-y:auto; font-family:'Nanum Myeongjo'; white-space: pre-wrap;"></div>
+            </div>
         </div>
     </div>
 
@@ -259,6 +390,22 @@
         window.addEventListener('resize', init);
         init();
         setInterval(draw, 33);
+
+        function showChapter(title, content) {
+            document.getElementById('viewer-title').innerText = title;
+            document.getElementById('viewer-content').innerText = content;
+            document.getElementById('story-viewer').style.display = 'flex';
+        }
+
+        function closeViewer() {
+            document.getElementById('story-viewer').style.display = 'none';
+            }
+
+        const originalCloseModal = closeModal;
+        window.closeModal = function() {
+            closeViewer();
+            document.getElementById('modal').style.display = 'none';
+        }
     </script>
 </body>
 </html>
