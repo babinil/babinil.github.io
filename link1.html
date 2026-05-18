@@ -33,32 +33,28 @@
 
         .index-tabs {
             position: absolute;
-            left: -45px;
-            top: 60px;
+            top: -35px;
+            left: 40px;
             display: flex;
-            flex-direction: column;
             gap: 10px;
-            z-index: 100;
+            z-index: 5;
         }
 
         .tab {
-            width: 60px;
-            height: 45px;
-            background: #3d5a80;
+            width: 80px;
+            height: 40px;
             color: white;
-            writing-mode: vertical-rl;
             text-align: center;
-            padding: 10px 5px;
-            border-radius: 8px 0 0 8px;
+            border-radius: 8px 8px 0 0;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.1rem;
             transition: 0.3s;
-            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
         }
 
-        .tab:hover { transform: translateX(-5px); }
-        .tab.original { background: var(--judas-blue); }
+        .tab.original { background: #3d5a80; }
         .tab.if-story { background: #5d4037; }
+        .tab:hover { transform: translateY(-5px); height: 45px }
 
         .body.if-mode .story-btn{
             background: #5d4037;
@@ -461,10 +457,11 @@
             original: {
                 title: "Judas & Iris",
                 hashtag: "#동거 #감독관 #피감독인 #구원 #소멸",
+                footerMsg: "✧⋄⋆⋅⋆⋄✧ You are my entire world, and my world is ending. ✧⋄⋆⋅⋆⋄✧",
                 imgJudas: "image/J26.jpeg",
                 judastag: "♡J",
                 imgIris: "image/Rie.jpeg",
-                iristag: "♡Iris",
+                iristag: "♡Rie",
                 judasDetail: `<i>"I love you, so please melt down."</i><br>
                 Gender: M / Age: 26 / Birth: 10/21 <br>
                 Ability: Burst Switch[S] / Department: Dracal`,
@@ -482,6 +479,7 @@
             if: {
                 title: "Judas & Aurora",
                 hashtag: "#IF #대립 #망령 #구원 #파멸",
+                footerMsg: "✧⋄⋆⋅⋆⋄✧ You are my entire world. ✧⋄⋆⋅⋆⋄✧",
                 imgJudas: "image/Judas.png",
                 judastag: "♡Judas",
                 imgIris: "image/Aurora.jpeg",
@@ -516,12 +514,13 @@
             document.getElementById('text-title').innerText = data.title;
             document.getElementById('text-hashtag').innerText = data.hashtag;
             document.getElementById('img-judas').src = data.imgJudas;
-            document.getElementById('judas-tag').src = data.judastag;
+            document.getElementById('judas-tag').innerText = data.judastag;
             document.getElementById('img-iris').src = data.imgIris;
-            document.getElementById('aurora-tag').src = data.iristag;
+            document.getElementById('aurora-tag').innerText = data.iristag;
             document.getElementById('text-detail').innerHTML = data.judasDetail;
             document.getElementById('text-name').innerText = data.irisName;
             document.getElementById('text-sub').innerHTML = data.irisDetail;
+            document.querySelector('.archive-footer').innerText = data.footerMsg;
     
             currentStories = data.stories;
         }
