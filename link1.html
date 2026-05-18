@@ -319,13 +319,13 @@
                 <div class="photo-frame p-judas">
                     <div class="tape" style="background: var(--tape-blue);"></div>
                     <img src="image/J26.jpeg" id="img-judas" alt="Judas">
-                    <div class="day-tag">♡J</div>
+                    <div class="day-tag" id="judas-tag">♡J</div>
                 </div>
 
                 <div class="photo-frame p-iris">
                     <div class="tape" style="background: var(--tape-yellow);"></div>
                     <img src="image/Rie.jpeg" id="img-iris" alt="Iris">
-                    <div class="day-tag">♡Rie</div>
+                    <div class="day-tag" id="aurora-tag">♡Rie</div>
                 </div>
             </div>
 
@@ -462,7 +462,9 @@
                 title: "Judas & Iris",
                 hashtag: "#동거 #감독관 #피감독인 #구원 #소멸",
                 imgJudas: "image/J26.jpeg",
+                judastag: "♡J",
                 imgIris: "image/Rie.jpeg",
+                iristag: "♡Iris",
                 judasDetail: `<i>"I love you, so please melt down."</i><br>
                 Gender: M / Age: 26 / Birth: 10/21 <br>
                 Ability: Burst Switch[S] / Department: Dracal`,
@@ -481,7 +483,9 @@
                 title: "Judas & Aurora",
                 hashtag: "#IF #대립 #망령 #구원 #파멸",
                 imgJudas: "image/Judas.png",
+                judastag: "♡Judas",
                 imgIris: "image/Aurora.jpeg",
+                iristag: "♡Aurora",
                 judasDetail: `<i>"O Deus meus, fac me quaeso tuum."</i><br>
                 Gender: M / Age: 26 / Birth: 10/21 <br>
                 Ability: Burst Switch[S] / Department: Villain`,
@@ -512,7 +516,9 @@
             document.getElementById('text-title').innerText = data.title;
             document.getElementById('text-hashtag').innerText = data.hashtag;
             document.getElementById('img-judas').src = data.imgJudas;
+            document.getElementById('judas-tag').src = data.judastag;
             document.getElementById('img-iris').src = data.imgIris;
+            document.getElementById('aurora-tag').src = data.iristag;
             document.getElementById('text-detail').innerHTML = data.judasDetail;
             document.getElementById('text-name').innerText = data.irisName;
             document.getElementById('text-sub').innerHTML = data.irisDetail;
