@@ -302,6 +302,72 @@
             color: #d18d00;
             font-weight: bold;
         }
+
+        @media (max-width: 1100px) {
+            body {
+                overflow-y: auto;
+                align-items: flex-start;
+                padding: 60px 10px;
+            }
+        
+            .diary-container {
+                width: 100%;
+                height: auto;
+                max-width: 500px;
+                animation: none;
+            }
+        
+            .diary-wrapper {
+                flex-direction: column;
+            }
+        
+            .diary-wrapper::after {
+                display: none;
+            }
+        
+            .page-left, .page-right {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 30px 20px;
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+        
+            .photo-frame img {
+                width: 140px; 
+                height: 170px;
+            }
+        
+            .p-judas { top: 30px; left: 20px; }
+            .p-iris { top: 120px; left: 140px; }
+        
+            .index-tabs {
+                top: -30px;
+                left: 20px;
+                gap: 5px;
+            }
+        
+            .tab {
+                width: 60px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+        
+            .modal-content {
+                width: 95%;
+                padding: 20px 10px;
+            }
+        
+            .bookmark-container {
+                gap: 8px;
+                min-height: 250px;
+            }
+        
+            .bookmark {
+                flex: 0 0 80px;
+                height: 220px;
+            }
+        }
     </style>
 </head>
 <body>
