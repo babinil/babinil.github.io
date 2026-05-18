@@ -324,22 +324,43 @@
             .diary-wrapper::after {
                 display: none;
             }
+
+            .page-left{
+                width: 100%;
+                box-sizing: border-box;
+                padding-top: 250px;
+                padding-bottom: 30px;
+                position: relative;
+                display: flex;
+                justify-content: center;
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+
+            .page-left .sticker {
+                display: none;
+            }
         
-            .page-left, .page-right {
+            .page-right {
                 width: 100%;
                 box-sizing: border-box;
                 padding: 30px 20px;
                 border-right: none;
                 border-bottom: 1px solid #eee;
             }
-        
-            .photo-frame img {
-                width: 140px; 
-                height: 170px;
+
+            .photo-frame {
+                position: absolute;
             }
         
-            .p-judas { top: 30px; left: 20px; }
-            .p-iris { top: 120px; left: 140px; }
+            .photo-frame img {
+                width: 130px; 
+                height: 160px;
+                object-fit: cover;
+            }
+        
+            .p-judas { top: 40px; left: 15%; transform: rotate(-5deg); z-index: 11; }
+            .p-iris { top: 60px; left: 45%; transform: rotate(7deg); z-index: 12; }
         
             .index-tabs {
                 top: -30px;
