@@ -7,183 +7,171 @@
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #fcf8f2;
+            --outer-bg: #d9e4f1; 
             --paper-color: #ffffff;
             --grid-line: #f1eee9;
             --text-main: #2f3640;
-            --accent-color: #7d8da1;
-            --tape-color: rgba(125, 141, 161, 0.3);
+            --judas-blue: #3d5a80;
+            --iris-yellow: #eead2d;
+            --tape-blue: rgba(61, 90, 128, 0.2);
+            --tape-yellow: rgba(238, 173, 45, 0.2);
         }
 
         body {
             margin: 0; padding: 0;
             display: flex; justify-content: center; align-items: center;
             height: 100vh;
-            background-color: var(--bg-color);
-            /* 전체 배경 격자 */
-            background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-            background-size: 30px 30px;
+            background-color: var(--outer-bg);
             font-family: 'Gaegu', cursive;
             overflow: hidden;
             perspective: 2000px;
         }
 
-        /* 다이어리 열기 애니메이션 */
+        #snow {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+
         .diary-container {
             width: 1050px; height: 700px;
-            position: relative;
+            position: relative; z-index: 10;
             transform-style: preserve-3d;
-            opacity: 0;
-            animation: bookOpen 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation: bookOpen 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
         @keyframes bookOpen {
-            from { transform: rotateX(15deg) scale(0.5); opacity: 0; }
-            to { transform: rotateX(0deg) scale(1); opacity: 1; }
+            from { transform: translateY(50px) rotateX(10deg); opacity: 0; }
+            to { transform: translateY(0) rotateX(0deg); opacity: 1; }
         }
 
         .diary-wrapper {
             display: flex; width: 100%; height: 100%;
             background: var(--paper-color);
-            border-radius: 5px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+            box-shadow: 0 20px 80px rgba(0,0,0,0.15);
             position: relative;
+            border-radius: 4px;
         }
 
-        /* 중앙 접힘선 연출 */
         .diary-wrapper::after {
             content: ''; position: absolute; left: 50%; top: 0;
-            width: 30px; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(0,0,0,0.03), transparent);
+            width: 40px; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(0,0,0,0.04), transparent);
             transform: translateX(-50%);
-            pointer-events: none; z-index: 10;
+            z-index: 20; pointer-events: none;
         }
 
-        /* 왼쪽 페이지: 사진 배치 */
-        .page-left {
+        .page-left, .page-right {
             flex: 1; position: relative;
-            background: #fff;
-            border-right: 1px solid #eee;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), 
+                              linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 28px 28px;
+            padding: 40px;
+            overflow: hidden;
         }
 
-        /* 삐딱하게 겹친 사진 연출 */
-        .photo-stack {
-            position: relative; width: 300px; height: 450px;
+        .page-left { border-right: 1px solid #eee; }
+
+        .sticker {
+            position: absolute; font-size: 2rem; 
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.1));
+            z-index: 5; pointer-events: none; opacity: 0.8;
         }
 
         .photo-frame {
             position: absolute;
-            background: #fff; padding: 12px 12px 45px 12px;
-            box-shadow: 2px 10px 20px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            background: #fff; padding: 12px 12px 50px 12px;
+            box-shadow: 3px 10px 25px rgba(0,0,0,0.1);
+            z-index: 10;
         }
-
-        .photo-frame img { width: 220px; height: 260px; object-fit: cover; }
+        .photo-frame img { width: 200px; height: 240px; object-fit: cover; }
         
-        .photo-label {
-            position: absolute; bottom: 12px; left: 0; width: 100%;
-            text-align: center; font-size: 1.2rem; color: #555;
+        .day-tag {
+            position: absolute; bottom: 15px; left: 0; width: 100%;
+            text-align: center; font-size: 1.3rem; color: #666;
         }
 
-        /* 주다스 사진 (1번) */
         .p-judas {
-            top: 20px; left: -20px; transform: rotate(-8deg); z-index: 1;
+            top: 60px; left: 50px; transform: rotate(-5deg);
+            z-index: 12;
         }
-        /* 아이리스 사진 (2번) - 위로 겹침 */
         .p-iris {
-            top: 150px; left: 40px; transform: rotate(5deg); z-index: 2;
+            top: 240px; left: 160px; transform: rotate(7deg);
+            z-index: 11;
         }
 
         .tape {
             position: absolute; top: -15px; left: 50%;
-            transform: translateX(-50%);
-            width: 80px; height: 25px;
-            background: var(--tape-color);
-            backdrop-filter: blur(2px);
+            transform: translateX(-50%); width: 90px; height: 28px;
+            backdrop-filter: blur(1px); border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* 오른쪽 페이지: 프로필 및 격자무늬 */
-        .page-right {
-            flex: 1; padding: 40px 50px;
-            position: relative;
-            /* 페이지 내 격자무늬 적용 */
-            background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-            background-size: 25px 25px;
-            display: flex; flex-direction: column;
-        }
-
-        /* 타이틀 섹션 (3번 - 위쪽 배치) */
-        .header-section {
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--text-main);
-            padding-bottom: 10px;
-        }
-        .header-section h1 { font-size: 3.2rem; margin: 0; color: var(--text-main); }
+        .header-section { margin-bottom: 35px; }
+        .header-section h1 { font-size: 3.5rem; margin: 0; color: var(--text-main); }
         .header-section p { 
             font-family: 'Nanum Myeongjo', serif; 
-            font-size: 1rem; color: #7f8c8d; margin: 5px 0 0 0;
-            font-style: italic;
+            font-size: 1.1rem; color: #888; margin: 5px 0;
         }
 
-        /* 프로필 텍스트 섹션 (4, 5번) */
-        .profile-text-box {
+        .profile-box {
             font-family: 'Nanum Myeongjo', serif;
-            line-height: 1.8; color: #34495e;
-            margin-bottom: 25px;
-            background: rgba(255,255,255,0.6); /* 격자 위 글씨 가독성을 위해 살짝 불투명 배경 */
-            padding: 15px; border-radius: 5px;
+            margin-bottom: 30px; line-height: 1.8;
         }
-        .profile-text-box h3 { 
-            font-family: 'Gaegu', cursive; font-size: 1.8rem; 
-            margin: 0 0 10px 0; color: var(--accent-color); 
-            border-left: 5px solid var(--accent-color); padding-left: 10px;
+        
+        .box-judas h3 { 
+            font-family: 'Gaegu'; font-size: 2rem; color: var(--judas-blue); 
+            margin: 0; border-bottom: 2px dashed var(--judas-blue); display: inline-block;
         }
-        .profile-text-box p { margin: 0; font-size: 0.95rem; }
+        .box-judas p { color: #455a64; font-size: 0.95rem; margin-top: 8px; }
 
-        /* Our Story 버튼 (6번) */
+        .box-iris h3 { 
+            font-family: 'Gaegu'; font-size: 2rem; color: var(--iris-yellow); 
+            margin: 0; border-bottom: 2px dashed var(--iris-yellow); display: inline-block;
+        }
+        .box-iris p { color: #5d4037; font-size: 0.95rem; margin-top: 8px; }
+
         .story-btn {
-            margin-top: auto;
-            align-self: center;
-            padding: 12px 40px;
-            background: var(--text-main); color: #fff;
-            border: none; border-radius: 50px;
-            font-size: 1.4rem; cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-top: 20px; padding: 10px 40px;
+            background: #2f3640; color: #fff;
+            border: none; border-radius: 4px;
+            font-size: 1.5rem; cursor: pointer; transition: 0.3s;
         }
-        .story-btn:hover { background: var(--accent-color); transform: scale(1.05); }
+        .story-btn:hover { background: var(--judas-blue); transform: translateY(-3px); }
 
-        /* 팝업 모달 */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4); display: none; justify-content: center; align-items: center;
-            z-index: 100; backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center;
+            z-index: 100;
         }
         .modal-content {
-            background: #fff; width: 550px; padding: 40px;
-            border-radius: 20px; font-family: 'Nanum Myeongjo', serif;
+            background: #fff; width: 500px; padding: 40px;
+            border-radius: 8px; font-family: 'Nanum Myeongjo', serif;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            line-height: 2;
         }
     </style>
 </head>
 <body>
 
+    <canvas id="snow"></canvas>
+
     <div class="diary-container">
         <div class="diary-wrapper">
             <div class="page-left">
-                <div class="photo-stack">
-                    <div class="photo-frame p-judas">
-                        <div class="tape"></div>
-                        <img src="image/J26.jpeg" alt="Judas">
-                        <div class="photo-label">Judas Wiseman</div>
-                    </div>
-                    <div class="photo-frame p-iris">
-                        <div class="tape" style="background: rgba(200,200,200,0.3);"></div>
-                        <img src="image/Rie.jpeg" alt="Iris">
-                        <div class="photo-label">Iris Aether</div>
-                    </div>
+                <div class="sticker" style="top: 20px; left: 30px;">❄️</div>
+                <div class="sticker" style="bottom: 50px; right: 40px; transform: rotate(15deg);">✨</div>
+                <div class="sticker" style="top: 40%; right: 20px;">☁️</div>
+                <div class="sticker" style="bottom: 20px; left: 20px;">🏷️</div>
+
+                <div class="photo-frame p-judas">
+                    <div class="tape" style="background: var(--tape-blue);"></div>
+                    <img src="image/J26.jpeg" alt="Judas">
+                    <div class="day-tag">♡day 26</div>
+                </div>
+
+                <div class="photo-frame p-iris">
+                    <div class="tape" style="background: var(--tape-yellow);"></div>
+                    <img src="image/Rie.jpeg" alt="Iris">
+                    <div class="day-tag">♡day 24</div>
                 </div>
             </div>
 
@@ -193,16 +181,16 @@
                     <p>"얼어붙은 바다에 가라앉은 유일한 온기"</p>
                 </div>
 
-                <div class="profile-text-box">
+                <div class="profile-box box-judas">
                     <h3>Judas Wiseman</h3>
                     <p>나이: 26세 / 소속: Dracal / 능력: Burst Switch[S]<br>
-                    ㄴ</p>
+                    후냐</p>
                 </div>
 
-                <div class="profile-text-box">
+                <div class="profile-box box-iris">
                     <h3>Iris Aether</h3>
-                    <p>나이: 24세 / 소속: dd / 능력: Purification[S]<br>
-                    아나</p>
+                    <p>나이: 24세 / 소속: 이글아이 / 능력: Purification[S]<br>
+                    후냐후냐</p>
                 </div>
 
                 <button class="story-btn" onclick="openModal()">Our Story</button>
@@ -210,18 +198,64 @@
         </div>
     </div>
 
-    <div class="modal" id="storyModal" onclick="closeModal()">
+    <div class="modal" id="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 style="font-family: 'Gaegu'; font-size: 2rem;">氷點 : 두 사람의 이야기</h2>
+            <h2 style="font-family: 'Gaegu';">氷點 : Story</h2>
             <hr>
-            <p>기승전결의 이야기 <br>
-            홈페이지의 전체적인 톤앤매너와 맞춰서 작성된 상세 기록 페이지입니다.</p>
+            <p style="line-height: 1.8;">두 사람의 기승전결 서사</p>
         </div>
     </div>
 
     <script>
-        function openModal() { document.getElementById('storyModal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('storyModal').style.display = 'none'; }
+        function openModal() { document.getElementById('modal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+
+        const canvas = document.getElementById('snow');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+
+        function init() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            particles = [];
+            for(let i=0; i<100; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    r: Math.random() * 3 + 1,
+                    d: Math.random() * 1
+                });
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0,0,width,height);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+            ctx.beginPath();
+            for(let p of particles) {
+                ctx.moveTo(p.x, p.y);
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, true);
+            }
+            ctx.fill();
+            update();
+        }
+
+        function update() {
+            for(let p of particles) {
+                p.y += Math.cos(p.d) + 1 + p.r/2;
+                p.x += Math.sin(p.d) * 2;
+                if(p.y > height) {
+                    p.x = Math.random() * width;
+                    p.y = -10;
+                }
+            }
+        }
+
+        window.addEventListener('resize', init);
+        init();
+        setInterval(draw, 33);
     </script>
 </body>
 </html>
