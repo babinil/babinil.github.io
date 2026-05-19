@@ -90,7 +90,6 @@
             transform-style: preserve-3d;
             animation: bookOpen 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
             border-radius: 25px; 
-            /* overflow: hidden; */
             box-shadow: 0 25px 50px rgba(0,0,0,0.15);
         }
 
@@ -396,10 +395,10 @@
     <canvas id="snow"></canvas>
 
     <div class="diary-container">
-            <div class="index-tabs">
-                <div class="tab original" onclick="changeMode('original')">Main</div>
-                <div class="tab if-story" onclick="changeMode('if')">IF</div>
-            </div>
+        <div class="index-tabs">
+            <div class="tab original" onclick="changeMode('original')">Main</div>
+            <div class="tab if-story" onclick="changeMode('if')">IF</div>
+        </div>
         <div class="diary-wrapper">
             <div class="page-left">
                 <div class="sticker" style="top: 20px; left: 30px;">❄️</div>
@@ -520,7 +519,6 @@
         init();
         setInterval(draw, 33);
     
-    
         const allData = {
             original: {
                 title: "Judas & Iris",
@@ -543,7 +541,7 @@
                     { type: 'open', num: '03', surface: '장', title: '세 번째 장', key: 'ch3', icon: '❄️' },
                     { type: 'open', num: '02', surface: '장', title: '두 번째 장', key: 'ch2', icon: '❄️' },
                     { type: 'open', num: '01', surface: '장', title: '불편한 동거인', key: 'ch1', icon: '❄️' }
-                    ],
+                ],
                 stories: {
                     ch1: `test`,
                     ch2: `두 번째 이야기...`,
@@ -571,7 +569,7 @@
                     { type: 'locked' },
                     { type: 'locked' },
                     { type: 'open', num: '01', surface: '장', title: 'IF 첫 번째 이야기', key: 'ch1', icon: '❄️' }
-                    ],
+                ],
                 stories: {
                     ch1: `IF 첫 번째 이야기...`
                 }
@@ -581,66 +579,66 @@
         let currentStories = allData.original.stories;
     
         function changeMode(mode) {
-                const data = allData[mode];
-                
-                if(mode === 'if') {
-                    document.body.classList.add('if-mode');
-                } else {
-                    document.body.classList.remove('if-mode');
-                }
-        
-                document.getElementById('text-title').innerText = data.title;
-                document.getElementById('text-hashtag').innerText = data.hashtag;
-                document.getElementById('img-judas').src = data.imgJudas;
-                document.getElementById('judas-tag').innerText = data.judastag;
-                document.getElementById('img-iris').src = data.imgIris;
-                document.getElementById('aurora-tag').innerText = data.iristag;
-                document.getElementById('text-detail').innerHTML = data.judasDetail;
-                document.getElementById('text-name').innerText = data.irisName;
-                document.getElementById('text-sub').innerHTML = data.irisDetail;
-                document.querySelector('.archive-footer').innerText = data.footerMsg;
-        
-                currentStories = data.stories;
+            const data = allData[mode];
+            
+            if(mode === 'if') {
+                document.body.classList.add('if-mode');
+            } else {
+                document.body.classList.remove('if-mode');
+            }
     
-                const container = document.getElementById('bookmark-container');
-                if (container) {
-                    let bookmarkHTML = '';
-                    data.bookmarks.forEach(bm => {
-                        if (bm.type === 'locked') {
-                            bookmarkHTML += `
-                                <div class="bookmark locked">
-                                    <div class="bm-icon" style="margin-top:80px">🔒</div>
-                                    <div class="bm-title" style="color:#aaa">???</div>
-                                </div>
-                            `;
-                        } else {
-                            bookmarkHTML += `
-                                <div class="bookmark" onclick="showChapter('${bm.title}', '${bm.key}')">
-                                    <div class="bm-number">${bm.num}</div>
-                                    <div class="bm-title">${bm.surface}</div>
-                                    <div class="bm-icon">${bm.icon}</div>
-                                </div>
-                            `;
-                        }
-                    });
-                    container.innerHTML = bookmarkHTML;
-                }
+            document.getElementById('text-title').innerText = data.title;
+            document.getElementById('text-hashtag').innerText = data.hashtag;
+            document.getElementById('img-judas').src = data.imgJudas;
+            document.getElementById('judas-tag').innerText = data.judastag;
+            document.getElementById('img-iris').src = data.imgIris;
+            document.getElementById('aurora-tag').innerText = data.iristag;
+            document.getElementById('text-detail').innerHTML = data.judasDetail;
+            document.getElementById('text-name').innerText = data.irisName;
+            document.getElementById('text-sub').innerHTML = data.irisDetail;
+            document.querySelector('.archive-footer').innerText = data.footerMsg;
+    
+            currentStories = data.stories;
+    
+            const container = document.getElementById('bookmark-container');
+            if (container) {
+                let bookmarkHTML = '';
+                data.bookmarks.forEach(bm => {
+                    if (bm.type === 'locked') {
+                        bookmarkHTML += `
+                            <div class="bookmark locked">
+                                <div class="bm-icon" style="margin-top:80px">🔒</div>
+                                <div class="bm-title" style="color:#aaa">???</div>
+                            </div>
+                        `;
+                    } else {
+                        bookmarkHTML += `
+                            <div class="bookmark" onclick="showChapter('${bm.title}', '${bm.key}')">
+                                <div class="bm-number">${bm.num}</div>
+                                <div class="bm-title">${bm.surface}</div>
+                                <div class="bm-icon">${bm.icon}</div>
+                            </div>
+                        `;
+                    }
+                });
+                container.innerHTML = bookmarkHTML;
             }
-        
-            function showChapter(chapterTitle, chapterKey) {
-                const content = currentStories[chapterKey];
-                document.getElementById('viewer-title').innerText = chapterTitle;
-                document.getElementById('viewer-content').innerHTML = content;
-                document.getElementById('story-viewer').style.display = 'flex';
-            }
-        
-            function closeViewer() {
-                document.getElementById('story-viewer').style.display = 'none';
-            }
-        
-            document.addEventListener("DOMContentLoaded", () => {
-                changeMode('original');
-            });
+        }
+    
+        function showChapter(chapterTitle, chapterKey) {
+            const content = currentStories[chapterKey];
+            document.getElementById('viewer-title').innerText = chapterTitle;
+            document.getElementById('viewer-content').innerHTML = content;
+            document.getElementById('story-viewer').style.display = 'flex';
+        }
+    
+        function closeViewer() {
+            document.getElementById('story-viewer').style.display = 'none';
+        }
+    
+        document.addEventListener("DOMContentLoaded", () => {
+            changeMode('original');
+        });
     </script>
 </body>
 </html>
