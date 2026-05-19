@@ -469,9 +469,9 @@
     
     <script>
         function openModal() { document.getElementById('modal').style.display = 'flex'; }
-        function closeModal() { 
+        function closeModal() {
             closeViewer();
-            document.getElementById('modal').style.display = 'none'; 
+            document.getElementById('modal').style.display = 'none';
         }
     
         const canvas = document.getElementById('snow');
@@ -678,7 +678,7 @@
                 Gender: M / Age: 26 / Birth: 10/21 <br>
                 Ability: Burst Switch[S] / Department: Villain`,
                 irisName: "Aurora",
-                irisDetail: `<i>"God is dead. Now I\'m your only god."</i><br>
+                irisDetail: `<i>"God is dead. Now I'm your only god."</i><br>
                 Gender: F / Age: 24? / Birth: 12/25<br>
                 Ability: 氷結[A] / Feature: Returned from the dead`,
                 bookmarks: [
@@ -696,67 +696,66 @@
         let currentStories = allData.original.stories;
     
         function changeMode(mode) {
-            const data = allData[mode];
-            
-            if(mode === 'if') {
-                document.body.classList.add('if-mode');
-            } else {
-                document.body.classList.remove('if-mode');
+                const data = allData[mode];
+                
+                if(mode === 'if') {
+                    document.body.classList.add('if-mode');
+                } else {
+                    document.body.classList.remove('if-mode');
+                }
+        
+                document.getElementById('text-title').innerText = data.title;
+                document.getElementById('text-hashtag').innerText = data.hashtag;
+                document.getElementById('img-judas').src = data.imgJudas;
+                document.getElementById('judas-tag').innerText = data.judastag;
+                document.getElementById('img-iris').src = data.imgIris;
+                document.getElementById('aurora-tag').innerText = data.iristag;
+                document.getElementById('text-detail').innerHTML = data.judasDetail;
+                document.getElementById('text-name').innerText = data.irisName;
+                document.getElementById('text-sub').innerHTML = data.irisDetail;
+                document.querySelector('.archive-footer').innerText = data.footerMsg;
+        
+                currentStories = data.stories;
+    
+                const container = document.getElementById('bookmark-container');
+                if (container) {
+                    let bookmarkHTML = '';
+                    data.bookmarks.forEach(bm => {
+                        if (bm.type === 'locked') {
+                            bookmarkHTML += `
+                                <div class="bookmark locked">
+                                    <div class="bm-icon" style="margin-top:80px">🔒</div>
+                                    <div class="bm-title" style="color:#aaa">???</div>
+                                </div>
+                            `;
+                        } else {
+                            bookmarkHTML += `
+                                <div class="bookmark" onclick="showChapter('${bm.title}', '${bm.key}')">
+                                    <div class="bm-number">${bm.num}</div>
+                                    <div class="bm-title">${bm.surface}</div>
+                                    <div class="bm-icon">${bm.icon}</div>
+                                </div>
+                            `;
+                        }
+                    });
+                    container.innerHTML = bookmarkHTML;
+                }
             }
-    
-            document.getElementById('text-title').innerText = data.title;
-            document.getElementById('text-hashtag').innerText = data.hashtag;
-            document.getElementById('img-judas').src = data.imgJudas;
-            document.getElementById('judas-tag').innerText = data.judastag;
-            document.getElementById('img-iris').src = data.imgIris;
-            document.getElementById('aurora-tag').innerText = data.iristag;
-            document.getElementById('text-detail').innerHTML = data.judasDetail;
-            document.getElementById('text-name').innerText = data.irisName;
-            document.getElementById('text-sub').innerHTML = data.irisDetail;
-            document.querySelector('.archive-footer').innerText = data.footerMsg;
-    
-            currentStories = data.stories;
-        }
-
-        const container = document.getElementById('bookmark-container');
-        let bookmarkHTML = '';
-
-        data.bookmarks.forEach(bm => {
-            if (bm.type === 'locked') {
-                bookmarkHTML += `
-                    <div class="bookmark locked">
-                        <div class="bm-icon" style="margin-top:80px">🔒</div>
-                        <div class="bm-title" style="color:#aaa">???</div>
-                    </div>
-                    `;
-            } else {
-                bookmarkHTML += `
-                    <div class="bookmark" onclick="showChapter('${bm.title}', '${bm.key}')">
-                        <div class="bm-number">${bm.num}</div>
-                        <div class="bm-title">${bm.surface}</div>
-                        <div class="bm-icon">${bm.icon}</div>
-                    </div>
-                `;
+        
+            function showChapter(chapterTitle, chapterKey) {
+                const content = currentStories[chapterKey];
+                document.getElementById('viewer-title').innerText = chapterTitle;
+                document.getElementById('viewer-content').innerHTML = content;
+                document.getElementById('story-viewer').style.display = 'flex';
             }
-        });
-
-        container.innerHTML = bookmarkHTML;
-    
-        function showChapter(chapterTitle, chapterKey) {
-            const content = currentStories[chapterKey];
-            
-            document.getElementById('viewer-title').innerText = chapterTitle;
-            document.getElementById('viewer-content').innerHTML = content;
-            document.getElementById('story-viewer').style.display = 'flex';
-        }
-    
-        function closeViewer() {
-            document.getElementById('story-viewer').style.display = 'none';
-        }
-    
-        window.onload = () => {
-            changeMode('original');
-        };
+        
+            function closeViewer() {
+                document.getElementById('story-viewer').style.display = 'none';
+            }
+        
+            document.addEventListener("DOMContentLoaded", () => {
+                changeMode('original');
+            });
     </script>
 </body>
 </html>
