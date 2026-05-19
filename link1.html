@@ -451,35 +451,8 @@
             
             <div class="archive-title">빙점氷點 : 물이 어는 점이자, 얼음이 녹는 점</div>
     
-            <div class="bookmark-container">
-                <div class="bookmark locked">
-                    <div class="bm-icon" style="margin-top:80px">🔒</div>
-                    <div class="bm-title" style="color:#aaa">???</div>
-                </div>
-    
-                <div class="bookmark" onclick="showChapter('Chapter 04', 'ch4')">
-                    <div class="bm-number">04</div>
-                    <div class="bm-title">장</div>
-                    <div class="bm-icon">❄️</div>
-                </div>
-    
-                <div class="bookmark" onclick="showChapter('Chapter 03', 'ch3')">
-                    <div class="bm-number">03</div>
-                    <div class="bm-title">장</div>
-                    <div class="bm-icon">❄️</div>
-                </div>
-    
-                <div class="bookmark" onclick="showChapter('Chapter 02', 'ch2')">
-                    <div class="bm-number">02</div>
-                    <div class="bm-title">장</div>
-                    <div class="bm-icon">❄️</div>
-                </div>
-    
-                <div class="bookmark" onclick="showChapter('불편한 동거인', 'ch1')">
-                    <div class="bm-number">01</div>
-                    <div class="bm-title">장</div>
-                    <div class="bm-icon">❄️</div>
-                </div>
+            <div class="bookmark-container" id="bookmark-container">
+                
             </div>
     
             <div class="archive-footer">
@@ -564,6 +537,13 @@
                 irisDetail: `<i>"I won't disappear. Promise."</i><br>
                 Gender: F / Age: 24 / Birth: 04/28<br>
                 Ability: Purification[S] / Risk: Presence rate↓, Immunity↓`,
+                bookmarks: [
+                    { type: 'locked' },
+                    { type: 'open', num: '04', surface: '장', title: '네 번째 장', key: 'ch4', icon: '❄️' },
+                    { type: 'open', num: '03', surface: '장', title: '세 번째 장', key: 'ch3', icon: '❄️' },
+                    { type: 'open', num: '02', surface: '장', title: '두 번째 장', key: 'ch2', icon: '❄️' },
+                    { type: 'open', num: '01', surface: '장', title: '불편한 동거인', key: 'ch1', icon: '❄️' }
+                    ],
                 stories: {
                     ch1: `답지않게 평화로운 하루였다.<br>
                     평소 같으면 게이트 팀 '헌터즈', 에스퍼 범죄 전담팀 '울프독', 서포트 팀 '이글아이', 신규 에스퍼 육성팀 '드라칼'과 같은 유니온의 부서를 달달 외우기에 바빴을 텐데, 오늘은 소파 주변에 퀴즈를 위한 준비물도 하나 없었다.<br><br>
@@ -701,11 +681,14 @@
                 irisDetail: `<i>"God is dead. Now I\'m your only god."</i><br>
                 Gender: F / Age: 24? / Birth: 12/25<br>
                 Ability: 氷結[A] / Feature: Returned from the dead`,
+                bookmarks: [
+                    { type: 'locked' },
+                    { type: 'locked' },
+                    { type: 'locked' },
+                    { type: 'open', num: '01', surface: '장', title: 'IF 첫 번째 이야기', key: 'ch1', icon: '❄️' }
+                    ],
                 stories: {
-                    ch1: `IF 첫 번째 이야기...`,
-                    ch2: `IF 두 번째 이야기...`,
-                    ch3: `IF 세 번째 이야기...`,
-                    ch4: `IF 네 번째 이야기...`
+                    ch1: `IF 첫 번째 이야기...`
                 }
             }
         };
@@ -734,6 +717,30 @@
     
             currentStories = data.stories;
         }
+
+        const container = document.getElementById('bookmark-container');
+        let bookmarkHTML = '';
+
+        data.bookmarks.forEach(bm => {
+            if (bm.type === 'locked') {
+                bookmarkHTML += `
+                    <div class="bookmark locked">
+                        <div class="bm-icon" style="margin-top:80px">🔒</div>
+                        <div class="bm-title" style="color:#aaa">???</div>
+                    </div>
+                    `;
+            } else {
+                bookmarkHTML += `
+                    <div class="bookmark" onclick="showChapter('${bm.title}', '${bm.key}')">
+                        <div class="bm-number">${bm.num}</div>
+                        <div class="bm-title">${bm.surface}</div>
+                        <div class="bm-icon">${bm.icon}</div>
+                    </div>
+                `;
+            }
+        });
+
+        container.innerHTML = bookmarkHTML;
     
         function showChapter(chapterTitle, chapterKey) {
             const content = currentStories[chapterKey];
